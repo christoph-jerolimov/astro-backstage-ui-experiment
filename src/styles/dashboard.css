@@ -1028,7 +1028,10 @@
 }
 
 .palette [cmdk-item][data-selected='true'] {
-  background: var(--bui-bg-neutral-2);
+  /* the same treatment the active sidebar item gets, so "where am I" reads
+     the same in both; --bui-bg-neutral-2 is too faint on a light surface */
+  background: var(--bui-bg-info);
+  font-weight: 600;
 }
 
 .palette [cmdk-empty] {
