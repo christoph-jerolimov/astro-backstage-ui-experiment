@@ -22,29 +22,31 @@ interface ServicesTableProps {
 
 export function ServicesTable({ services = SERVICES }: ServicesTableProps) {
   return (
-    <TableRoot aria-label="Services">
-      <TableHeader>
-        <Column isRowHeader>Service</Column>
-        <Column>Owner</Column>
-        <Column>Language</Column>
-        <Column>Uptime (30d)</Column>
-        <Column>Deploys / week</Column>
-        <Column>Status</Column>
-      </TableHeader>
-      <TableBody>
-        {services.map((service) => (
-          <Row key={service.name}>
-            <CellText title={service.name} />
-            <CellText title={service.owner} />
-            <CellText title={service.language} />
-            <CellText title={service.uptime} />
-            <CellText title={String(service.deploysPerWeek)} />
-            <Cell>
-              <StatusPill {...STATUS[service.status]} />
-            </Cell>
-          </Row>
-        ))}
-      </TableBody>
-    </TableRoot>
+    <div className="table-scroll">
+      <TableRoot aria-label="Services">
+        <TableHeader>
+          <Column isRowHeader>Service</Column>
+          <Column>Owner</Column>
+          <Column>Language</Column>
+          <Column>Uptime (30d)</Column>
+          <Column>Deploys / week</Column>
+          <Column>Status</Column>
+        </TableHeader>
+        <TableBody>
+          {services.map((service) => (
+            <Row key={service.name}>
+              <CellText title={service.name} />
+              <CellText title={service.owner} />
+              <CellText title={service.language} />
+              <CellText title={service.uptime} />
+              <CellText title={String(service.deploysPerWeek)} />
+              <Cell>
+                <StatusPill {...STATUS[service.status]} />
+              </Cell>
+            </Row>
+          ))}
+        </TableBody>
+      </TableRoot>
+    </div>
   );
 }

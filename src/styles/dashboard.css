@@ -48,16 +48,6 @@
   padding: 0 var(--bui-space-6, 24px) var(--bui-space-8, 32px);
 }
 
-@media (max-width: 900px) {
-  .app-shell {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .app-sidebar {
-    position: static;
-    height: auto;
-  }
-}
-
 /* ---- Sidebar (react-aria ListBox) ---- */
 
 .app-sidebar {
@@ -70,6 +60,23 @@
   padding: 20px 12px;
   box-sizing: border-box;
   border-right: 1px solid var(--bui-border-1);
+  /* opaque and above the content, so the page scrolls under it rather than
+     through it */
+  background: var(--bui-bg-app);
+  z-index: 20;
+}
+
+.sidebar-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 16px;
+}
+
+/* The drawer trigger only exists below the breakpoint. */
+.drawer-trigger {
+  display: none;
 }
 
 .sidebar-brand {
@@ -374,4 +381,170 @@
   height: 8px;
   border-radius: 50%;
   flex: none;
+}
+
+/* ---- Mobile drawer ----
+   The drawer portals to the end of <body>, so it sits outside the app grid.
+   react-aria's Modal supplies the focus trap, Escape handling and scroll lock;
+   these rules are purely presentational. */
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.drawer {
+  width: min(84vw, 300px);
+  height: 100%;
+  box-sizing: border-box;
+  background: var(--bui-bg-app);
+  border-right: 1px solid var(--bui-border-1);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.28);
+  display: flex;
+}
+
+.drawer-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 16px 12px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.drawer-trigger,
+.drawer-close {
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--bui-fg-primary);
+  cursor: pointer;
+  outline: none;
+}
+
+.drawer-close {
+  display: inline-flex;
+}
+
+.drawer-trigger[data-hovered],
+.drawer-close[data-hovered] {
+  background: var(--bui-bg-neutral-2);
+}
+
+.drawer-trigger[data-focus-visible],
+.drawer-close[data-focus-visible] {
+  outline: 2px solid var(--chart-series-1);
+  outline-offset: -2px;
+}
+
+.drawer-overlay[data-entering] {
+  animation: drawer-fade 180ms ease-out;
+}
+
+.drawer-overlay[data-exiting] {
+  animation: drawer-fade 150ms ease-in reverse;
+}
+
+.drawer[data-entering] {
+  animation: drawer-slide 220ms ease-out;
+}
+
+.drawer[data-exiting] {
+  animation: drawer-slide 160ms ease-in reverse;
+}
+
+@keyframes drawer-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drawer-slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-overlay[data-entering],
+  .drawer-overlay[data-exiting],
+  .drawer[data-entering],
+  .drawer[data-exiting] {
+    animation: none;
+  }
+}
+
+/* ---- Small screens ----
+   Must come after the rules it overrides: an earlier media block loses to a
+   later rule of equal specificity, which is exactly how the sidebar used to
+   end up 100vh tall on a phone. */
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* the sidebar collapses into a sticky top app bar */
+  .app-sidebar {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    height: auto;
+    padding: 8px 12px;
+    border-right: none;
+    border-bottom: 1px solid var(--bui-border-1);
+  }
+
+  .sidebar-body {
+    display: none;
+  }
+
+  .drawer-trigger {
+    display: inline-flex;
+  }
+
+  .sidebar-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .app-main {
+    padding: 0 12px 24px;
+  }
+
+  .kpi-row {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .settings-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* wide content scrolls inside its own box; the page never scrolls sideways.
+     The table needs a floor width or it squeezes every column to an ellipsis
+     instead of overflowing, and nothing ends up scrollable. */
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-scroll > * {
+    min-width: 620px;
+  }
 }

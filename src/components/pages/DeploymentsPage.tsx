@@ -117,47 +117,49 @@ export function DeploymentsPage() {
             </Text>
           </CardHeader>
           <CardBody>
-            <TableRoot aria-label="Recent deployments">
-              <TableHeader>
-                <Column isRowHeader>Deployment</Column>
-                <Column>Service</Column>
-                <Column>Environment</Column>
-                <Column>Version</Column>
-                <Column>Duration</Column>
-                <Column>When</Column>
-                <Column>Status</Column>
-              </TableHeader>
-              <TableBody>
-                {DEPLOYMENTS.map((deployment) => (
-                  <Row key={deployment.id}>
-                    <CellText title={deployment.id} />
-                    <CellText title={deployment.service} />
-                    <CellText title={deployment.environment} />
-                    <CellText title={deployment.version} />
-                    <CellText title={deployment.duration} />
-                    <CellText title={deployment.when} />
-                    <Cell>
-                      <StatusPill
-                        tone={
-                          deployment.status === 'succeeded'
-                            ? 'good'
-                            : deployment.status === 'failed'
-                              ? 'critical'
-                              : 'warning'
-                        }
-                        label={
-                          deployment.status === 'succeeded'
-                            ? 'Succeeded'
-                            : deployment.status === 'failed'
-                              ? 'Failed'
-                              : 'Rolled back'
-                        }
-                      />
-                    </Cell>
-                  </Row>
-                ))}
-              </TableBody>
-            </TableRoot>
+            <div className="table-scroll">
+              <TableRoot aria-label="Recent deployments">
+                <TableHeader>
+                  <Column isRowHeader>Deployment</Column>
+                  <Column>Service</Column>
+                  <Column>Environment</Column>
+                  <Column>Version</Column>
+                  <Column>Duration</Column>
+                  <Column>When</Column>
+                  <Column>Status</Column>
+                </TableHeader>
+                <TableBody>
+                  {DEPLOYMENTS.map((deployment) => (
+                    <Row key={deployment.id}>
+                      <CellText title={deployment.id} />
+                      <CellText title={deployment.service} />
+                      <CellText title={deployment.environment} />
+                      <CellText title={deployment.version} />
+                      <CellText title={deployment.duration} />
+                      <CellText title={deployment.when} />
+                      <Cell>
+                        <StatusPill
+                          tone={
+                            deployment.status === 'succeeded'
+                              ? 'good'
+                              : deployment.status === 'failed'
+                                ? 'critical'
+                                : 'warning'
+                          }
+                          label={
+                            deployment.status === 'succeeded'
+                              ? 'Succeeded'
+                              : deployment.status === 'failed'
+                                ? 'Failed'
+                                : 'Rolled back'
+                          }
+                        />
+                      </Cell>
+                    </Row>
+                  ))}
+                </TableBody>
+              </TableRoot>
+            </div>
           </CardBody>
         </Card>
       </Flex>

@@ -22,6 +22,18 @@ document and its own URL:
 page drops its own island into the slot, so the sidebar and the page content
 hydrate independently.
 
+### Small screens
+
+Below 900px the sidebar collapses into a sticky top app bar and the navigation
+moves into an off-canvas drawer, opened from the hamburger button. The drawer is
+react-aria's `Modal`, which brings the focus trap, Escape-to-close, click-outside
+dismissal and background scroll lock with it.
+
+The app bar is opaque and sits above the content, so the page scrolls *under* it.
+Wide tables scroll inside their own card rather than making the page scroll
+sideways, and charts thin out their axis labels — and drop their end labels
+entirely below 400px — so nothing collides at phone width.
+
 Because every navigation is a fresh document, the theme is persisted to
 `localStorage` and re-applied by an inline script in `Layout.astro` **before
 first paint** — switching pages never flashes the light theme.
@@ -42,9 +54,9 @@ subpath. Astro rewrites the URLs it generates itself, but not hrefs written by
 hand, so the sidebar links go through `withBase()` in
 `src/components/dashboard/base.ts`.
 
-> **One-time setup:** in the repository settings, set **Pages → Build and
-> deployment → Source** to **GitHub Actions**. The workflow cannot enable this
-> for you, and deploys fail until it is set.
+> **Setup:** Pages must be enabled for the repository with **Settings → Pages →
+> Build and deployment → Source** set to **GitHub Actions**. It already is here,
+> and the first deploy went out without any manual step.
 
 ## What it uses
 
@@ -91,5 +103,6 @@ column, stacked bar, sparkline). They follow a few deliberate rules:
 | `npm run check`   | Type-check with `astro check`                |
 | `npm test`        | Run the Playwright tests (build first)       |
 
-The Playwright suite renders every page in both themes and writes the ten
-screenshots in `screenshots/`, which are committed to the repository.
+The Playwright suite renders every page in both themes, plus a phone-sized
+viewport, and writes the screenshots in `screenshots/`, which are committed to
+the repository.

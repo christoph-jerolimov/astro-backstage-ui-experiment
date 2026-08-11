@@ -1,10 +1,21 @@
 // Backstage UI has no sidebar component, so this one is built directly on
-// react-aria-components' ListBox. Items carry an `href`, so react-aria renders
-// them as real links and the browser handles navigation between the Astro
-// pages. The active page is expressed as the ListBox's controlled selection —
-// react-aria does not forward `aria-current` to the DOM, and inside a listbox
-// `aria-selected` is the semantic that assistive tech actually reads.
-import { ListBox, ListBoxItem } from 'react-aria-components';
+// react-aria-components. Items carry an `href`, so react-aria renders them as
+// real links and the browser handles navigation between the Astro pages. The
+// active page is expressed as the ListBox's controlled selection — react-aria
+// does not forward `aria-current`, and inside a listbox `aria-selected` is the
+// semantic assistive tech reads.
+//
+// Below 900px the same nav moves into an off-canvas drawer built on react-aria's
+// Modal, which brings the focus trap, Escape-to-close and scroll lock with it.
+import {
+  Button,
+  Dialog,
+  DialogTrigger,
+  ListBox,
+  ListBoxItem,
+  Modal,
+  ModalOverlay,
+} from 'react-aria-components';
 import { Avatar, Text } from '@backstage/ui';
 import { withBase } from './base';
 
@@ -22,44 +33,113 @@ interface SidebarProps {
   current: NavKey;
 }
 
+function NavList({ current, label }: { current: NavKey; label: string }) {
+  return (
+    <ListBox
+      className="sidebar-nav"
+      aria-label={label}
+      selectionMode="single"
+      disallowEmptySelection
+      selectedKeys={[current]}
+    >
+      {NAV_ITEMS.map(({ id, label: itemLabel, href, icon: Icon }) => (
+        <ListBoxItem
+          key={id}
+          id={id}
+          href={withBase(href)}
+          className="sidebar-item"
+          textValue={itemLabel}
+        >
+          <Icon />
+          {itemLabel}
+        </ListBoxItem>
+      ))}
+    </ListBox>
+  );
+}
+
+function Brand() {
+  return (
+    <div className="sidebar-brand">
+      <span className="sidebar-brand-mark" aria-hidden="true">
+        <IconRocket />
+      </span>
+      <Text variant="title-x-small" as="span">
+        Acme Cloud
+      </Text>
+    </div>
+  );
+}
+
+function User() {
+  return (
+    <div className="sidebar-footer">
+      <Avatar src="" name="Ada Lovelace" size="small" />
+      <Text variant="body-small" color="secondary" as="span">
+        Ada Lovelace
+      </Text>
+    </div>
+  );
+}
+
 export function Sidebar({ current }: SidebarProps) {
   return (
     <aside className="app-sidebar">
-      <div className="sidebar-brand">
-        <span className="sidebar-brand-mark" aria-hidden="true">
-          <IconRocket />
-        </span>
-        <Text variant="title-x-small" as="span">
-          Acme Cloud
-        </Text>
+      <div className="sidebar-top">
+        {/* Only rendered as a control below 900px; the drawer itself portals
+            out of the sidebar, so it is not constrained by the app grid. */}
+        <DialogTrigger>
+          <Button className="drawer-trigger" aria-label="Open navigation">
+            <IconMenu />
+          </Button>
+          <ModalOverlay className="drawer-overlay" isDismissable>
+            <Modal className="drawer">
+              <Dialog className="drawer-dialog" aria-label="Navigation">
+                {({ close }) => (
+                  <>
+                    <div className="drawer-head">
+                      <Brand />
+                      <Button
+                        className="drawer-close"
+                        aria-label="Close navigation"
+                        onPress={close}
+                      >
+                        <IconClose />
+                      </Button>
+                    </div>
+                    <NavList current={current} label="Main navigation" />
+                    <User />
+                  </>
+                )}
+              </Dialog>
+            </Modal>
+          </ModalOverlay>
+        </DialogTrigger>
+        <Brand />
       </div>
-      <ListBox
-        className="sidebar-nav"
-        aria-label="Main navigation"
-        selectionMode="single"
-        disallowEmptySelection
-        selectedKeys={[current]}
-      >
-        {NAV_ITEMS.map(({ id, label, href, icon: Icon }) => (
-          <ListBoxItem
-            key={id}
-            id={id}
-            href={withBase(href)}
-            className="sidebar-item"
-            textValue={label}
-          >
-            <Icon />
-            {label}
-          </ListBoxItem>
-        ))}
-      </ListBox>
-      <div className="sidebar-footer">
-        <Avatar src="" name="Ada Lovelace" size="small" />
-        <Text variant="body-small" color="secondary" as="span">
-          Ada Lovelace
-        </Text>
+
+      {/* The always-visible nav; hidden below 900px in favour of the drawer. */}
+      <div className="sidebar-body">
+        <NavList current={current} label="Main navigation" />
+        <User />
       </div>
     </aside>
+  );
+}
+
+function IconMenu() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+      <path d="M3 5.5h14M3 10h14M3 14.5h14" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconClose() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+      <path d="M5 5l10 10M15 5L5 15" strokeLinecap="round" />
+    </svg>
   );
 }
 
