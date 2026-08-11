@@ -1302,3 +1302,33 @@
 .matrix td .bui-Checkbox {
   display: inline-flex;
 }
+
+/* One workspace per row: identity on the left, what you can do on the right. */
+.workspace-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--bui-border-1);
+  border-radius: 10px;
+}
+
+.workspace-row[data-current='true'] {
+  border-color: var(--chart-series-1);
+  background: var(--bui-bg-neutral-1);
+}
+
+.workspace-end {
+  margin-left: auto;
+}
+
+@media (max-width: 720px) {
+  .workspace-row {
+    flex-wrap: wrap;
+  }
+
+  .workspace-end {
+    margin-left: 0;
+    width: 100%;
+  }
+}
