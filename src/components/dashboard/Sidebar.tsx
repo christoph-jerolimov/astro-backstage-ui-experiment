@@ -16,7 +16,14 @@ import {
   Modal,
   ModalOverlay,
 } from 'react-aria-components';
-import { Avatar, Text } from '@backstage/ui';
+import {
+  Avatar,
+  Menu,
+  MenuItem,
+  MenuSeparator,
+  MenuTrigger,
+  Text,
+} from '@backstage/ui';
 import { withBase } from './base';
 
 const NAV_ITEMS = [
@@ -75,10 +82,23 @@ function Brand() {
 function User() {
   return (
     <div className="sidebar-footer">
-      <Avatar src="" name="Ada Lovelace" size="small" />
-      <Text variant="body-small" color="secondary" as="span">
-        Ada Lovelace
-      </Text>
+      {/* The account menu; the pages it links to are not in the main nav. */}
+      <MenuTrigger>
+        <Button className="user-trigger" aria-label="Account menu">
+          <Avatar src="" name="Ada Lovelace" size="small" />
+          <Text variant="body-small" color="secondary" as="span">
+            Ada Lovelace
+          </Text>
+        </Button>
+        <Menu>
+          <MenuItem href={withBase('/profile')}>Profile</MenuItem>
+          <MenuItem href={withBase('/api-keys')}>API keys</MenuItem>
+          <MenuSeparator />
+          <MenuItem href={withBase('/signin')} color="danger">
+            Sign out
+          </MenuItem>
+        </Menu>
+      </MenuTrigger>
     </div>
   );
 }

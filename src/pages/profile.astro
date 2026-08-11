@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { ProfilePage } from '../components/pages/ProfilePage';
+---
+
+<DashboardLayout title="Profile – Acme Cloud">
+  <ProfilePage client:load />
+</DashboardLayout>
