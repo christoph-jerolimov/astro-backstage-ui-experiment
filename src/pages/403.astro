@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { ForbiddenPage } from '../components/pages/ForbiddenPage';
+---
+
+<DashboardLayout title="You do not have access – Acme Cloud">
+  <ForbiddenPage client:load />
+</DashboardLayout>
