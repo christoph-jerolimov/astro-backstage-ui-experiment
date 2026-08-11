@@ -76,7 +76,7 @@ export function SignInPage() {
                 <Checkbox isSelected={remember} onChange={setRemember}>
                   Keep me signed in
                 </Checkbox>
-                <Link href={withBase('/signin')}>Forgot password?</Link>
+                <Link href={withBase('/forgot-password')}>Forgot password?</Link>
               </Flex>
 
               <Button type="submit" variant="primary">
