@@ -8,6 +8,7 @@ import {
   TableRoot,
 } from '@backstage/ui';
 import { StatusPill, type StatusTone } from './StatusPill';
+import { withBase } from './base';
 import { SERVICES, type Service, type ServiceStatus } from './data';
 
 const STATUS: Record<ServiceStatus, { tone: StatusTone; label: string }> = {
@@ -35,7 +36,10 @@ export function ServicesTable({ services = SERVICES }: ServicesTableProps) {
         <TableBody>
           {services.map((service) => (
             <Row key={service.name}>
-              <CellText title={service.name} />
+              <CellText
+                title={service.name}
+                href={withBase(`/services/${service.name}`)}
+              />
               <CellText title={service.owner} />
               <CellText title={service.language} />
               <CellText title={service.uptime} />

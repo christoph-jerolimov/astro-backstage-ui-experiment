@@ -1,0 +1,18 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import { ServiceDetailPage } from '../../components/pages/ServiceDetailPage';
+import { SERVICES } from '../../components/dashboard/data';
+
+export function getStaticPaths() {
+  return SERVICES.map((service) => ({
+    params: { name: service.name },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+---
+
+<DashboardLayout title={`${service.name} – Acme Cloud`} current="services">
+  <ServiceDetailPage service={service} client:load />
+</DashboardLayout>
