@@ -1,0 +1,349 @@
+/*
+ * Dashboard layout + chart chrome.
+ *
+ * Chart colors follow the dataviz method: categorical slots in fixed order,
+ * validated for CVD separation and contrast against the actual card surfaces
+ * (light #ffffff, dark #424141). The dark values are the same hues re-stepped
+ * for the dark surface, not an automatic flip. Theme is keyed off the
+ * data-theme-mode attribute that Backstage UI uses.
+ */
+:root {
+  --chart-series-1: #2a78d6;
+  --chart-series-2: #eb6834;
+  --chart-series-3: #1baf7a;
+  --chart-grid: #e1e0d9;
+  --chart-baseline: #c3c2b7;
+  --chart-muted: #898781;
+  --chart-surface: #ffffff;
+  --chart-delta-up: #006300;
+  --status-good: #0ca30c;
+  --status-warning: #b97b00;
+  --status-critical: #d03b3b;
+}
+
+:root[data-theme-mode='dark'] {
+  --chart-series-1: #3987e5;
+  --chart-series-2: #d95926;
+  --chart-series-3: #199e70;
+  --chart-grid: #565555;
+  --chart-baseline: #6b6a6a;
+  --chart-muted: #a7a5a0;
+  --chart-surface: #424141;
+  --chart-delta-up: #4fc26b;
+  --status-good: #4fc26b;
+  --status-warning: #fab219;
+  --status-critical: #ff7b7b;
+}
+
+/* ---- App shell ---- */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.app-main {
+  min-width: 0;
+  padding: 0 var(--bui-space-6, 24px) var(--bui-space-8, 32px);
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app-sidebar {
+    position: static;
+    height: auto;
+  }
+}
+
+/* ---- Sidebar (react-aria ListBox) ---- */
+
+.app-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 12px;
+  box-sizing: border-box;
+  border-right: 1px solid var(--bui-border-1);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+}
+
+.sidebar-brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: var(--chart-series-1);
+  color: #ffffff;
+  flex: none;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  outline: none;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--bui-fg-primary);
+  cursor: pointer;
+  outline: none;
+}
+
+.sidebar-item svg {
+  color: var(--chart-muted);
+  flex: none;
+}
+
+.sidebar-item[data-hovered] {
+  background: var(--bui-bg-neutral-2);
+}
+
+.sidebar-item[data-selected] {
+  background: var(--bui-bg-info);
+  font-weight: 600;
+}
+
+.sidebar-item[data-selected] svg {
+  color: var(--chart-series-1);
+}
+
+.sidebar-item[data-focus-visible] {
+  outline: 2px solid var(--chart-series-1);
+  outline-offset: -2px;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--bui-border-1);
+  padding-top: 16px;
+}
+
+/* ---- Dashboard grid ---- */
+
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.charts-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+@media (max-width: 1100px) {
+  .charts-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--bui-fg-primary);
+}
+
+.stat-delta-up {
+  color: var(--chart-delta-up);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stat-delta-down {
+  color: var(--status-critical);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---- Charts ---- */
+
+.chart-figure {
+  position: relative;
+  margin: 0;
+}
+
+.chart-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chart-svg text {
+  font-family: var(--bui-font-regular, system-ui, sans-serif);
+  fill: var(--chart-muted);
+  font-size: 11px;
+}
+
+.chart-svg .chart-end-label {
+  fill: var(--bui-fg-primary);
+  font-weight: 600;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  padding: 0;
+  margin: 10px 0 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--bui-fg-secondary);
+}
+
+.chart-legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-line {
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  flex: none;
+}
+
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex: none;
+}
+
+/* Stacked bar: 2px surface gaps do the separating, never a border */
+.stack-track {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  height: 28px;
+  border-radius: 6px;
+  overflow: visible;
+}
+
+.stack-segment {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex-basis: 0;
+  outline: none;
+}
+
+.stack-segment:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.stack-segment:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.stack-segment:focus-visible {
+  outline: 2px solid var(--bui-fg-primary);
+  outline-offset: 2px;
+}
+
+.stack-label {
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.chart-tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  background: var(--bui-bg-neutral-1);
+  border: 1px solid var(--bui-border-1);
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  padding: 8px 10px;
+  font-size: 12px;
+  min-width: 132px;
+  color: var(--bui-fg-primary);
+}
+
+.chart-tooltip-title {
+  color: var(--bui-fg-secondary);
+  margin-bottom: 4px;
+}
+
+.chart-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.6;
+}
+
+.chart-tooltip-row .value {
+  margin-left: auto;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-tooltip-row .name {
+  color: var(--bui-fg-secondary);
+}
+
+.column-hit:hover .column-mark,
+.column-hit:focus-visible .column-mark {
+  filter: brightness(1.12);
+}
+
+.stack-segment:hover,
+.stack-segment:focus-visible {
+  filter: brightness(1.1);
+}
+
+/* ---- Status cell ---- */
+
+.status-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-cell svg {
+  flex: none;
+}
+
+.status-healthy {
+  color: var(--status-good);
+}
+
+.status-degraded {
+  color: var(--status-warning);
+}
+
+.status-down {
+  color: var(--status-critical);
+}
