@@ -26,6 +26,26 @@ Because every navigation is a fresh document, the theme is persisted to
 `localStorage` and re-applied by an inline script in `Layout.astro` **before
 first paint** — switching pages never flashes the light theme.
 
+## Deployment
+
+`.github/workflows/deploy.yml` publishes the site to GitHub Pages. It is
+triggered by `workflow_run` on a **successful** CI run on `main`, so a build
+whose tests failed is never published, and it checks out
+`workflow_run.head_sha` so the deployed commit is exactly the one CI validated.
+It can also be run manually from the Actions tab.
+
+A project site is served from `https://<user>.github.io/<repo>/`, so the build
+needs a base path. `astro.config.mjs` reads it from `BASE_PATH`, which the
+workflow fills in from `actions/configure-pages` — that keeps `npm run dev`, the
+local build and the Playwright suite on `/` while the deployed site gets the
+subpath. Astro rewrites the URLs it generates itself, but not hrefs written by
+hand, so the sidebar links go through `withBase()` in
+`src/components/dashboard/base.ts`.
+
+> **One-time setup:** in the repository settings, set **Pages → Build and
+> deployment → Source** to **GitHub Actions**. The workflow cannot enable this
+> for you, and deploys fail until it is set.
+
 ## What it uses
 
 From **`@backstage/ui`**: `Header`, `Card` / `CardHeader` / `CardBody`, `Flex`,

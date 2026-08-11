@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { waitForHydration } from './helpers';
 
 test.describe('Charts', () => {
   test('line chart shows a tooltip with every series on hover', async ({
     page,
   }) => {
     await page.goto('/');
+    await waitForHydration(page);
 
     const chart = page.getByRole('application').filter({
       has: page.getByRole('img', {
@@ -22,6 +24,7 @@ test.describe('Charts', () => {
 
   test('date range filter rescopes the charts', async ({ page }) => {
     await page.goto('/');
+    await waitForHydration(page);
 
     await page.getByRole('button', { name: /Date range/ }).click();
     await page.getByRole('option', { name: 'Last 7 days' }).click();
@@ -37,6 +40,7 @@ test.describe('Charts', () => {
 test.describe('Services page', () => {
   test('the search field filters the catalog', async ({ page }) => {
     await page.goto('/services');
+    await waitForHydration(page);
 
     const table = page.getByRole('grid', { name: 'Services' });
     await expect(table.getByText('catalog-api')).toBeVisible();
@@ -51,6 +55,7 @@ test.describe('Services page', () => {
 
   test('the owner filter narrows the catalog', async ({ page }) => {
     await page.goto('/services');
+    await waitForHydration(page);
 
     await page.getByRole('button', { name: /Owner/ }).click();
     await page.getByRole('option', { name: 'team-signal' }).click();
@@ -62,6 +67,7 @@ test.describe('Services page', () => {
 test.describe('Settings page', () => {
   test('the form saves and resets', async ({ page }) => {
     await page.goto('/settings');
+    await waitForHydration(page);
 
     await expect(page.getByText('Changes are not saved yet.')).toBeVisible();
 

@@ -1,0 +1,73 @@
+name: Deploy to GitHub Pages
+
+# Runs only after CI succeeds on main, so a build whose tests failed is never
+# published. workflow_dispatch allows a manual redeploy from the Actions tab.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+# Least privilege: read the repo, plus what deploy-pages needs to publish.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; let a newer commit supersede a queued one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # workflow_run checks out the default branch by default; pin the exact
+          # commit CI validated so the deploy matches what was tested.
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Build
+        run: npm run build
+        env:
+          # A project site is served from /<repo>/, so the site has to be built
+          # with that base. configure-pages reports the right values for both
+          # project and user/org sites.
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          SITE_URL: ${{ steps.pages.outputs.origin }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

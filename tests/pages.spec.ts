@@ -1,23 +1,6 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { PAGES } from './pages';
-
-/** Seeds the persisted theme so the page renders dark from first paint. */
-async function useDarkTheme(page: Page) {
-  await page.addInitScript(() =>
-    localStorage.setItem('acme-theme-mode', 'dark'),
-  );
-}
-
-/**
- * Stacked-bar labels only appear once the island has hydrated and measured
- * them, so a screenshot taken before that catches a half-rendered chart.
- */
-async function settle(page: Page) {
-  const stacks = page.locator('.stack-track');
-  for (let i = 0; i < (await stacks.count()); i++) {
-    await expect(stacks.nth(i)).toHaveAttribute('data-measured', 'true');
-  }
-}
+import { settle, useDarkTheme } from './helpers';
 
 for (const target of PAGES) {
   test.describe(`${target.name} page`, () => {
@@ -38,7 +21,9 @@ for (const target of PAGES) {
       ).toHaveAttribute('aria-selected', 'true');
 
       for (const content of target.expects) {
-        await expect(page.getByText(content, { exact: false }).first()).toBeVisible();
+        await expect(
+          page.getByText(content, { exact: false }).first(),
+        ).toBeVisible();
       }
 
       await settle(page);
