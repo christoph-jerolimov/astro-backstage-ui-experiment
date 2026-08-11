@@ -1091,3 +1091,39 @@
 .palette-trigger[data-focus-visible] {
   box-shadow: 0 0 0 2px var(--bui-bg-app), 0 0 0 4px var(--chart-series-1);
 }
+
+/* ---- Auth pages ---- */
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bui-fg-primary);
+  text-decoration: none;
+}
+
+/* Three bars that repeat what the label already says; the label is the
+   accessible version, so the meter itself is hidden from assistive tech. */
+.strength-meter {
+  display: flex;
+  gap: 4px;
+}
+
+.strength-meter span {
+  width: 28px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--bui-bg-neutral-2);
+}
+
+.strength-meter[data-score='1'] span:nth-child(1) {
+  background: var(--status-critical);
+}
+
+.strength-meter[data-score='2'] span:nth-child(-n + 2) {
+  background: var(--status-warning);
+}
+
+.strength-meter[data-score='3'] span {
+  background: var(--status-good);
+}

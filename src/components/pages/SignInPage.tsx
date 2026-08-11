@@ -10,7 +10,7 @@ import {
   Text,
   TextField,
 } from '@backstage/ui';
-import { ThemeSwitch } from '../dashboard/ThemeSwitch';
+import { AuthHeader } from './AuthHeader';
 import { withBase } from '../dashboard/base';
 
 const DEMO_EMAIL = 'ada@acme.cloud';
@@ -38,20 +38,7 @@ export function SignInPage() {
 
   return (
     <>
-      <Flex align="center" justify="between" mb="4">
-        <Flex align="center" gap="2">
-          <span className="sidebar-brand-mark" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M8 12c3.5-2 5-5.5 5-9-3.5 0-7 1.5-9 5l-2.5.5L4 11l2.5 2.5L7 11z" />
-              <circle cx="9.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-            </svg>
-          </span>
-          <Text variant="title-x-small" as="span">
-            Acme Cloud
-          </Text>
-        </Flex>
-        <ThemeSwitch />
-      </Flex>
+      <AuthHeader />
 
       <Card>
         <CardBody>
@@ -107,7 +94,9 @@ export function SignInPage() {
 
       <Flex justify="center" mt="4">
         <Text variant="body-small" color="secondary">
-          No account yet? <Link href={withBase('/pricing')}>See pricing</Link>
+          No account yet?{' '}
+          <Link href={withBase('/signup')}>Create one</Link> or{' '}
+          <Link href={withBase('/pricing')}>see pricing</Link>
         </Text>
       </Flex>
     </>

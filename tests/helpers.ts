@@ -80,6 +80,25 @@ export async function clickUntilVisible(target: Locator, appears: Locator) {
   }).toPass({ timeout: 20000 });
 }
 
+/**
+ * Ticks a Backstage UI checkbox.
+ *
+ * react-aria hides the real input behind its label, so the label is the
+ * clickable target, and a press landing right after hydration can be
+ * swallowed — hence the retry, guarded on the input's own state so it cannot
+ * toggle back off.
+ */
+export async function tickCheckbox(page: Page, name: string | RegExp) {
+  const input = page.getByRole('checkbox', { name });
+  const label = page.locator('label.bui-Checkbox').filter({ hasText: name });
+  await expect(async () => {
+    if (!(await input.isChecked())) {
+      await label.first().click();
+    }
+    await expect(input).toBeChecked({ timeout: 1000 });
+  }).toPass({ timeout: 15000 });
+}
+
 /** Seeds the persisted theme so the page renders dark from first paint. */
 export async function useDarkTheme(page: Page) {
   await page.addInitScript(() =>
