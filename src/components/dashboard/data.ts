@@ -60,12 +60,6 @@ export const RANGE_OPTIONS: { id: RangeKey; label: string; days: number }[] = [
   { id: '90d', label: 'Last 90 days', days: 90 },
 ];
 
-export const LANGUAGES = [
-  { name: 'TypeScript', services: 11 },
-  { name: 'Go', services: 8 },
-  { name: 'Python', services: 5 },
-] as const;
-
 export type ServiceStatus = 'healthy' | 'degraded' | 'down';
 
 export interface Service {
@@ -138,4 +132,28 @@ export const SERVICES: Service[] = [
   { name: 'billing-worker', owner: 'team-ledger', language: 'Python', uptime: '99.97%', deploysPerWeek: 4, status: 'healthy' },
   { name: 'notification-hub', owner: 'team-signal', language: 'TypeScript', uptime: '98.71%', deploysPerWeek: 11, status: 'down' },
   { name: 'metrics-collector', owner: 'team-signal', language: 'Go', uptime: '99.99%', deploysPerWeek: 8, status: 'healthy' },
+  { name: 'audit-log', owner: 'team-vault', language: 'Go', uptime: '99.98%', deploysPerWeek: 3, status: 'healthy' },
+  { name: 'session-store', owner: 'team-vault', language: 'Go', uptime: '99.93%', deploysPerWeek: 5, status: 'healthy' },
+  { name: 'invoice-renderer', owner: 'team-ledger', language: 'Python', uptime: '99.89%', deploysPerWeek: 2, status: 'degraded' },
+  { name: 'tax-calculator', owner: 'team-ledger', language: 'Python', uptime: '99.99%', deploysPerWeek: 1, status: 'healthy' },
+  { name: 'webhook-dispatcher', owner: 'team-signal', language: 'TypeScript', uptime: '99.82%', deploysPerWeek: 7, status: 'healthy' },
+  { name: 'email-gateway', owner: 'team-signal', language: 'TypeScript', uptime: '99.76%', deploysPerWeek: 6, status: 'degraded' },
+  { name: 'entity-resolver', owner: 'team-atlas', language: 'TypeScript', uptime: '99.94%', deploysPerWeek: 10, status: 'healthy' },
+  { name: 'schema-registry', owner: 'team-atlas', language: 'Go', uptime: '99.99%', deploysPerWeek: 2, status: 'healthy' },
+  { name: 'feature-flags', owner: 'team-atlas', language: 'TypeScript', uptime: '99.96%', deploysPerWeek: 12, status: 'healthy' },
+  { name: 'rate-limiter', owner: 'team-vault', language: 'Go', uptime: '99.91%', deploysPerWeek: 4, status: 'healthy' },
+  { name: 'image-resizer', owner: 'team-pixel', language: 'Go', uptime: '99.85%', deploysPerWeek: 5, status: 'healthy' },
+  { name: 'asset-uploader', owner: 'team-pixel', language: 'TypeScript', uptime: '99.72%', deploysPerWeek: 8, status: 'degraded' },
+  { name: 'thumbnail-worker', owner: 'team-pixel', language: 'Python', uptime: '99.88%', deploysPerWeek: 3, status: 'healthy' },
+  { name: 'report-builder', owner: 'team-ledger', language: 'Python', uptime: '99.90%', deploysPerWeek: 2, status: 'healthy' },
+  { name: 'usage-aggregator', owner: 'team-signal', language: 'Go', uptime: '99.97%', deploysPerWeek: 6, status: 'healthy' },
+  { name: 'alert-router', owner: 'team-signal', language: 'Go', uptime: '99.41%', deploysPerWeek: 9, status: 'down' },
+  { name: 'config-service', owner: 'team-atlas', language: 'Go', uptime: '99.99%', deploysPerWeek: 3, status: 'healthy' },
+  { name: 'docs-site', owner: 'team-pixel', language: 'TypeScript', uptime: '99.99%', deploysPerWeek: 15, status: 'healthy' },
 ];
+
+/** Derived from SERVICES so the split always matches the catalog. */
+export const LANGUAGES = ['TypeScript', 'Go', 'Python'].map((name) => ({
+  name,
+  services: SERVICES.filter((service) => service.language === name).length,
+}));
