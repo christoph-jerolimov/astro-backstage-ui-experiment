@@ -25,6 +25,7 @@ import {
   Text,
 } from '@backstage/ui';
 import { withBase } from './base';
+import { OPEN_EVENT } from './CommandPalette';
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', href: '/', icon: IconGrid },
@@ -66,6 +67,25 @@ function NavList({ current, label }: { current?: NavKey; label: string }) {
         </ListBoxItem>
       ))}
     </ListBox>
+  );
+}
+
+/**
+ * The palette is a separate island, so this cannot open it directly — it
+ * dispatches the event the palette listens for.
+ */
+function PaletteTrigger() {
+  return (
+    <Button
+      className="palette-trigger"
+      onPress={() => window.dispatchEvent(new CustomEvent(OPEN_EVENT))}
+    >
+      <span>Jump to…</span>
+      <span aria-hidden="true">
+        <kbd>⌘</kbd>
+        <kbd>K</kbd>
+      </span>
+    </Button>
   );
 }
 
@@ -131,6 +151,7 @@ export function Sidebar({ current }: SidebarProps) {
                         <IconClose />
                       </Button>
                     </div>
+                    <PaletteTrigger />
                     <NavList current={current} label="Main navigation" />
                     <User />
                   </>
@@ -144,6 +165,7 @@ export function Sidebar({ current }: SidebarProps) {
 
       {/* The always-visible nav; hidden below 900px in favour of the drawer. */}
       <div className="sidebar-body">
+        <PaletteTrigger />
         <NavList current={current} label="Main navigation" />
         <User />
       </div>

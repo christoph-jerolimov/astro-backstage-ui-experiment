@@ -1,7 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from './Layout.astro';
 import { Sidebar } from '../components/dashboard/Sidebar';
 import type { NavKey } from '../components/dashboard/Sidebar';
+import { CommandPalette } from '../components/dashboard/CommandPalette';
 
 interface Props {
   title: string;
@@ -10,6 +12,12 @@ interface Props {
 }
 
 const { title, current } = Astro.props;
+
+// Read at build time so the palette lists whatever is in the collection
+// rather than a second, hand-maintained copy of it.
+const docs = (await getCollection('docs'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((doc) => ({ slug: doc.id, title: doc.data.title }));
 ---
 
 <Layout title={title}>
@@ -19,4 +27,5 @@ const { title, current } = Astro.props;
       <slot />
     </main>
   </div>
+  <CommandPalette docs={docs} client:load />
 </Layout>
