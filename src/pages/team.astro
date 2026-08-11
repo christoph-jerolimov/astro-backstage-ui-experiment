@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { TeamPage } from '../components/pages/TeamPage';
+---
+
+<DashboardLayout title="Team – Acme Cloud" current="team">
+  <TeamPage client:load />
+</DashboardLayout>

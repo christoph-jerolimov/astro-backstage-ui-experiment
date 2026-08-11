@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { PAGES } from './pages';
 import { settle, useDarkTheme, waitForHydration } from './helpers';
 
 // A phone-sized viewport for every test in this file.
@@ -49,7 +50,7 @@ test.describe('Small screens', () => {
     await page.getByRole('button', { name: 'Open navigation' }).click();
     const drawer = page.getByRole('dialog');
     await expect(drawer).toBeVisible();
-    await expect(drawer.getByRole('option')).toHaveCount(9);
+    await expect(drawer.getByRole('option')).toHaveCount(PAGES.length);
 
     // Escape closes it
     await page.keyboard.press('Escape');
