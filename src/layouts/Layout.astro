@@ -1,5 +1,6 @@
 ---
 import '@backstage/ui/css/styles.css';
+import '../styles/dashboard.css';
 
 interface Props {
   title: string;
@@ -9,13 +10,28 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-theme-mode="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    {/*
+      Applies the stored theme before first paint so navigating between pages
+      never flashes the light theme. Must stay inline and un-deferred.
+    */}
+    <script is:inline>
+      (function () {
+        var mode = 'light';
+        try {
+          if (localStorage.getItem('acme-theme-mode') === 'dark') mode = 'dark';
+        } catch (e) {
+          /* storage unavailable — fall back to light */
+        }
+        document.documentElement.setAttribute('data-theme-mode', mode);
+      })();
+    </script>
   </head>
   <body>
     <slot />

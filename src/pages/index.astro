@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { DashboardApp } from '../components/DashboardApp';
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { OverviewPage } from '../components/pages/OverviewPage';
 ---
 
-<Layout title="Acme Cloud – Platform dashboard">
-  <DashboardApp client:load />
-</Layout>
+<DashboardLayout title="Overview – Acme Cloud" current="overview">
+  <OverviewPage client:load />
+</DashboardLayout>

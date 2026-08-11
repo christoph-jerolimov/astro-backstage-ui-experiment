@@ -19,6 +19,7 @@ export function StackedBar({ segments, title, unit }: StackedBarProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const labelRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [fits, setFits] = useState<boolean[]>(() => segments.map(() => false));
+  const [measured, setMeasured] = useState(false);
   const [active, setActive] = useState<number | null>(null);
 
   const total = segments.reduce((sum, s) => sum + s.value, 0);
@@ -29,14 +30,20 @@ export function StackedBar({ segments, title, unit }: StackedBarProps) {
     const track = trackRef.current;
     if (!track) return;
     const trackWidth = track.getBoundingClientRect().width;
-    setFits(
-      segments.map((s, i) => {
-        const label = labelRefs.current[i];
-        if (!label) return false;
-        const segmentWidth = (s.value / total) * trackWidth;
-        return label.scrollWidth + 20 <= segmentWidth;
-      }),
+    const next = segments.map((s, i) => {
+      const label = labelRefs.current[i];
+      if (!label) return false;
+      const segmentWidth = (s.value / total) * trackWidth;
+      return label.scrollWidth + 20 <= segmentWidth;
+    });
+    // keep the previous array when nothing changed, so re-measuring on resize
+    // does not spin the component through pointless renders
+    setFits((prev) =>
+      prev.length === next.length && prev.every((v, i) => v === next[i])
+        ? prev
+        : next,
     );
+    setMeasured(true);
   };
 
   useLayoutEffect(measure, [segments, total]);
@@ -54,6 +61,9 @@ export function StackedBar({ segments, title, unit }: StackedBarProps) {
       <div
         className="stack-track"
         ref={trackRef}
+        /* flips once the labels have been measured — the inline labels only
+           appear after this, so tests can wait for it instead of racing */
+        data-measured={measured ? 'true' : 'false'}
         role="img"
         aria-label={`${title}: ${segments
           .map((s) => `${s.name} ${s.value} ${unit}`)

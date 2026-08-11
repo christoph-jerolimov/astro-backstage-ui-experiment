@@ -5,14 +5,27 @@ interface ColumnChartProps {
   labels: string[];
   values: number[];
   title: string;
+  /** Name of the measure, shown in the tooltip and per-column aria labels. */
+  seriesName: string;
   color?: string;
 }
 
 const VB_H = 240;
 const PAD = { top: 12, right: 12, bottom: 24, left: 40 };
 
+/**
+ * Picks a step that lands on 4-5 ticks for the given maximum. Small series
+ * (a handful of incidents) need small steps, or the bars collapse against a
+ * baseline while most of the plot sits empty.
+ */
 function niceTicks(max: number): number[] {
-  const step = max > 400 ? 200 : max > 200 ? 100 : max > 80 ? 40 : 20;
+  const rough = Math.max(max, 1) / 4;
+  const magnitude = 10 ** Math.floor(Math.log10(rough));
+  // every measure on this dashboard is a whole count, so never step in fractions
+  const step = Math.max(
+    1,
+    [1, 2, 5, 10].find((m) => m * magnitude >= rough)! * magnitude,
+  );
   const top = Math.ceil(max / step) * step;
   const ticks = [];
   for (let v = 0; v <= top; v += step) ticks.push(v);
@@ -23,6 +36,7 @@ export function ColumnChart({
   labels,
   values,
   title,
+  seriesName,
   color = 'var(--chart-series-1)',
 }: ColumnChartProps) {
   const titleId = useId();
@@ -81,7 +95,7 @@ export function ColumnChart({
               className="column-hit"
               tabIndex={0}
               role="img"
-              aria-label={`${labels[i]}: ${v} minutes`}
+              aria-label={`${labels[i]}: ${v} ${seriesName}`}
               onPointerEnter={() => setActive(i)}
               onPointerLeave={() => setActive(null)}
               onFocus={() => setActive(i)}
@@ -133,7 +147,7 @@ export function ColumnChart({
               style={{ background: color }}
               aria-hidden="true"
             />
-            <span className="name">Build minutes</span>
+            <span className="name">{seriesName}</span>
             <span className="value">{values[active]}</span>
           </div>
         </div>

@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { DeploymentsPage } from '../components/pages/DeploymentsPage';
+---
+
+<DashboardLayout title="Deployments – Acme Cloud" current="deployments">
+  <DeploymentsPage client:load />
+</DashboardLayout>

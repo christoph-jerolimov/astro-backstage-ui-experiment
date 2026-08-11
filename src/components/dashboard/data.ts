@@ -77,6 +77,60 @@ export interface Service {
   status: ServiceStatus;
 }
 
+export type DeployStatus = 'succeeded' | 'failed' | 'rolled-back';
+
+export interface Deployment {
+  id: string;
+  service: string;
+  environment: 'production' | 'staging';
+  version: string;
+  duration: string;
+  when: string;
+  status: DeployStatus;
+}
+
+export const DEPLOYMENTS: Deployment[] = [
+  { id: 'dep-8842', service: 'catalog-api', environment: 'production', version: 'v2.14.0', duration: '3m 12s', when: '12 minutes ago', status: 'succeeded' },
+  { id: 'dep-8841', service: 'search-indexer', environment: 'production', version: 'v1.8.3', duration: '5m 41s', when: '48 minutes ago', status: 'succeeded' },
+  { id: 'dep-8840', service: 'notification-hub', environment: 'production', version: 'v0.9.7', duration: '2m 05s', when: '1 hour ago', status: 'rolled-back' },
+  { id: 'dep-8839', service: 'auth-gateway', environment: 'staging', version: 'v3.2.0-rc1', duration: '4m 18s', when: '2 hours ago', status: 'succeeded' },
+  { id: 'dep-8838', service: 'billing-worker', environment: 'production', version: 'v1.4.2', duration: '6m 02s', when: '3 hours ago', status: 'failed' },
+  { id: 'dep-8837', service: 'metrics-collector', environment: 'staging', version: 'v2.0.1', duration: '1m 55s', when: '4 hours ago', status: 'succeeded' },
+  { id: 'dep-8836', service: 'catalog-api', environment: 'staging', version: 'v2.14.0-rc3', duration: '3m 07s', when: '5 hours ago', status: 'succeeded' },
+];
+
+export type Severity = 'sev1' | 'sev2' | 'sev3';
+
+export interface Incident {
+  id: string;
+  title: string;
+  service: string;
+  severity: Severity;
+  opened: string;
+  status: 'open' | 'mitigated' | 'resolved';
+}
+
+export const INCIDENTS: Incident[] = [
+  { id: 'INC-241', title: 'Elevated 5xx on delivery', service: 'notification-hub', severity: 'sev1', opened: 'Aug 11, 09:14', status: 'open' },
+  { id: 'INC-240', title: 'Token refresh latency', service: 'auth-gateway', severity: 'sev2', opened: 'Aug 11, 06:02', status: 'open' },
+  { id: 'INC-238', title: 'Search index lag', service: 'search-indexer', severity: 'sev2', opened: 'Aug 10, 22:47', status: 'mitigated' },
+  { id: 'INC-235', title: 'Billing export timeout', service: 'billing-worker', severity: 'sev3', opened: 'Aug 9, 14:20', status: 'resolved' },
+  { id: 'INC-231', title: 'Cold-start regression', service: 'catalog-api', severity: 'sev3', opened: 'Aug 7, 11:05', status: 'resolved' },
+];
+
+/** Incidents opened per calendar week, oldest first. */
+export const INCIDENTS_PER_WEEK = [
+  { label: 'Jun 15', value: 6 },
+  { label: 'Jun 22', value: 4 },
+  { label: 'Jun 29', value: 7 },
+  { label: 'Jul 6', value: 3 },
+  { label: 'Jul 13', value: 5 },
+  { label: 'Jul 20', value: 2 },
+  { label: 'Jul 27', value: 4 },
+  { label: 'Aug 3', value: 3 },
+  { label: 'Aug 10', value: 2 },
+];
+
 export const SERVICES: Service[] = [
   { name: 'catalog-api', owner: 'team-atlas', language: 'TypeScript', uptime: '99.99%', deploysPerWeek: 14, status: 'healthy' },
   { name: 'search-indexer', owner: 'team-atlas', language: 'Go', uptime: '99.95%', deploysPerWeek: 9, status: 'healthy' },
