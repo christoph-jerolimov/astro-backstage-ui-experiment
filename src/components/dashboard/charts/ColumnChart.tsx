@@ -55,7 +55,9 @@ export function ColumnChart({
   const y = (v: number) => PAD.top + plotH - (v / yMax) * plotH;
   const r = 4; // rounded data-end; square at the baseline
 
-  const xLabelEvery = Math.max(1, Math.ceil(n / 7));
+  // one tick per ~64px of plot, so labels never collide on a phone
+  const maxLabels = Math.max(2, Math.floor(plotW / 64));
+  const xLabelEvery = Math.max(1, Math.ceil(n / maxLabels));
   const tooltipLeftPct =
     active === null ? 0 : ((x(active) + barW / 2) / VB_W) * 100;
   const flip = active !== null && x(active) > VB_W * 0.62;

@@ -115,32 +115,34 @@ export function IncidentsPage() {
             </Flex>
           </CardHeader>
           <CardBody>
-            <TableRoot aria-label="Incidents">
-              <TableHeader>
-                <Column isRowHeader>Incident</Column>
-                <Column>Title</Column>
-                <Column>Service</Column>
-                <Column>Severity</Column>
-                <Column>Opened</Column>
-                <Column>Status</Column>
-              </TableHeader>
-              <TableBody>
-                {INCIDENTS.map((incident) => (
-                  <Row key={incident.id}>
-                    <CellText title={incident.id} />
-                    <CellText title={incident.title} />
-                    <CellText title={incident.service} />
-                    <Cell>
-                      <SeverityDot severity={incident.severity} />
-                    </Cell>
-                    <CellText title={incident.opened} />
-                    <Cell>
-                      <StatusPill {...STATUS[incident.status]} />
-                    </Cell>
-                  </Row>
-                ))}
-              </TableBody>
-            </TableRoot>
+            <div className="table-scroll">
+              <TableRoot aria-label="Incidents">
+                <TableHeader>
+                  <Column isRowHeader>Incident</Column>
+                  <Column>Title</Column>
+                  <Column>Service</Column>
+                  <Column>Severity</Column>
+                  <Column>Opened</Column>
+                  <Column>Status</Column>
+                </TableHeader>
+                <TableBody>
+                  {INCIDENTS.map((incident) => (
+                    <Row key={incident.id}>
+                      <CellText title={incident.id} />
+                      <CellText title={incident.title} />
+                      <CellText title={incident.service} />
+                      <Cell>
+                        <SeverityDot severity={incident.severity} />
+                      </Cell>
+                      <CellText title={incident.opened} />
+                      <Cell>
+                        <StatusPill {...STATUS[incident.status]} />
+                      </Cell>
+                    </Row>
+                  ))}
+                </TableBody>
+              </TableRoot>
+            </div>
           </CardBody>
         </Card>
       </Flex>

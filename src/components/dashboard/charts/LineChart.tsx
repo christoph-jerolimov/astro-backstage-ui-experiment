@@ -15,7 +15,10 @@ interface LineChartProps {
 }
 
 const VB_H = 240;
-const PAD = { top: 12, right: 104, bottom: 24, left: 36 };
+// Below this width the end labels cost more plot area than they are worth, so
+// the chart drops them and leans on the legend instead.
+const NARROW = 400;
+const PAD = { top: 12, bottom: 24, left: 36 };
 
 function niceTicks(max: number): number[] {
   const step = max > 40 ? 20 : max > 20 ? 10 : 5;
@@ -31,10 +34,12 @@ export function LineChart({ labels, series, title }: LineChartProps) {
   const [active, setActive] = useState<number | null>(null);
 
   const n = labels.length;
+  const narrow = VB_W < NARROW;
+  const padRight = narrow ? 16 : 104;
   const max = Math.max(...series.flatMap((s) => s.values));
   const ticks = niceTicks(max);
   const yMax = ticks[ticks.length - 1]!;
-  const plotW = VB_W - PAD.left - PAD.right;
+  const plotW = VB_W - PAD.left - padRight;
   const plotH = VB_H - PAD.top - PAD.bottom;
   const x = (i: number) => PAD.left + (n === 1 ? 0 : (i / (n - 1)) * plotW);
   const y = (v: number) => PAD.top + plotH - (v / yMax) * plotH;
@@ -62,7 +67,9 @@ export function LineChart({ labels, series, title }: LineChartProps) {
     }
   };
 
-  const xLabelEvery = Math.max(1, Math.ceil(n / 6));
+  // one tick per ~64px of plot, so labels never collide on a phone
+  const maxLabels = Math.max(2, Math.floor(plotW / 64));
+  const xLabelEvery = Math.max(1, Math.ceil(n / maxLabels));
   const tooltipLeftPct = active === null ? 0 : (x(active) / VB_W) * 100;
   const flip = active !== null && x(active) > VB_W * 0.62;
 
@@ -105,7 +112,7 @@ export function LineChart({ labels, series, title }: LineChartProps) {
             <g key={t}>
               <line
                 x1={PAD.left}
-                x2={VB_W - PAD.right}
+                x2={VB_W - padRight}
                 y1={y(t)}
                 y2={y(t)}
                 stroke={t === 0 ? 'var(--chart-baseline)' : 'var(--chart-grid)'}
@@ -156,13 +163,15 @@ export function LineChart({ labels, series, title }: LineChartProps) {
                 r={4}
                 fill={s.color}
               />
-              <text
-                className="chart-end-label"
-                x={x(n - 1) + 10}
-                y={endLabelY[si]! + 4}
-              >
-                {s.name} {s.values[n - 1]}
-              </text>
+              {!narrow && (
+                <text
+                  className="chart-end-label"
+                  x={x(n - 1) + 10}
+                  y={endLabelY[si]! + 4}
+                >
+                  {s.name} {s.values[n - 1]}
+                </text>
+              )}
               {active !== null && (
                 <>
                   <circle
@@ -207,7 +216,7 @@ export function LineChart({ labels, series, title }: LineChartProps) {
           </div>
         )}
       </div>
-      <ul className="chart-legend" aria-hidden="true">
+      <ul className="chart-legend">
         {series.map((s) => (
           <li key={s.name}>
             <span className="legend-line" style={{ background: s.color }} />
