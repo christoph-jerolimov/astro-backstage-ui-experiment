@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import { CreateServicePage } from '../../components/pages/CreateServicePage';
+---
+
+<DashboardLayout title="Create a service – Acme Cloud" current="services">
+  <CreateServicePage client:load />
+</DashboardLayout>

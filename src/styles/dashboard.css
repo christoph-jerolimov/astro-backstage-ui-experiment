@@ -752,3 +752,70 @@
   border-radius: 4px;
   background: var(--bui-bg-neutral-2);
 }
+
+/* ---- Wizard ---- */
+
+.wizard-steps {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.wizard-steps li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--bui-fg-secondary);
+  background: var(--bui-bg-neutral-2);
+}
+
+.wizard-steps li[data-state='current'] {
+  color: var(--bui-fg-primary);
+  background: var(--bui-bg-info);
+  font-weight: 600;
+}
+
+.wizard-step-index {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--chart-surface);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.wizard-steps li[data-state='done'] .wizard-step-index {
+  background: var(--status-good);
+  color: #ffffff;
+}
+
+.review-list {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.review-list > div {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 12px;
+}
+
+.review-list dt {
+  color: var(--bui-fg-secondary);
+  font-size: 13px;
+}
+
+.review-list dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--bui-fg-primary);
+}
