@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { SearchPage } from '../components/pages/SearchPage';
+---
+
+<DashboardLayout title="Search – Acme Cloud" current="search">
+  <SearchPage client:load />
+</DashboardLayout>
