@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { ApiKeysPage } from '../components/pages/ApiKeysPage';
+---
+
+<DashboardLayout title="API keys – Acme Cloud">
+  <ApiKeysPage client:load />
+</DashboardLayout>
