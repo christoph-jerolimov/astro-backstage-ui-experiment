@@ -664,3 +664,17 @@
 .session-list li:last-child {
   border-bottom: none;
 }
+
+/* ---- Secret reveal ---- */
+
+.secret {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bui-bg-neutral-2);
+  border: 1px solid var(--bui-border-1);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  word-break: break-all;
+  color: var(--bui-fg-primary);
+}
