@@ -1207,3 +1207,31 @@
   font-size: 13px;
   color: var(--bui-fg-primary);
 }
+
+/* Ordered work with a state per step. The glyph and the hidden label change
+   together, so the state does not rest on colour. */
+.progress-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--bui-fg-secondary);
+}
+
+.progress-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-list li[data-state='done'] {
+  color: var(--status-good);
+}
+
+.progress-list li[data-state='doing'] {
+  color: var(--bui-fg-primary);
+  font-weight: 600;
+}
