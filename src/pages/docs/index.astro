@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import { DocsIndexPage } from '../../components/pages/DocsIndexPage';
+
+const docs = (await getCollection('docs')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const entries = docs.map((doc) => ({
+  slug: doc.id,
+  title: doc.data.title,
+  description: doc.data.description,
+  updated: doc.data.updated,
+}));
+---
+
+<DashboardLayout title="Docs – Acme Cloud" current="docs">
+  <DocsIndexPage entries={entries} client:load />
+</DashboardLayout>

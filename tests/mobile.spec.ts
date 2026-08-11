@@ -49,7 +49,7 @@ test.describe('Small screens', () => {
     await page.getByRole('button', { name: 'Open navigation' }).click();
     const drawer = page.getByRole('dialog');
     await expect(drawer).toBeVisible();
-    await expect(drawer.getByRole('option')).toHaveCount(6);
+    await expect(drawer.getByRole('option')).toHaveCount(8);
 
     // Escape closes it
     await page.keyboard.press('Escape');
