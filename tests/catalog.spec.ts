@@ -41,13 +41,25 @@ test.describe('Catalog table', () => {
 
     // react-aria hides the real input behind its label, so the label is the
     // clickable target (index 0 is the select-all box in the header)
-    // react-aria hides the real input behind its label, so the label is the
-    // clickable target (index 0 is the select-all box in the header)
     const boxes = grid(page).locator('label.bui-Checkbox');
-    await boxes.nth(1).click();
+    const inputs = grid(page).getByRole('checkbox');
+
+    // A press landing right after hydration can be swallowed, so retry — but
+    // guard on the checkbox's own state, because blindly re-clicking a toggle
+    // would just switch it back off.
+    const select = async (index: number) => {
+      await expect(async () => {
+        if (!(await inputs.nth(index).isChecked())) {
+          await boxes.nth(index).click();
+        }
+        await expect(inputs.nth(index)).toBeChecked({ timeout: 1000 });
+      }).toPass({ timeout: 15000 });
+    };
+
+    await select(1);
     await expect(page.getByText('1 selected')).toBeVisible();
 
-    await boxes.nth(2).click();
+    await select(2);
     await expect(page.getByText('2 selected')).toBeVisible();
 
     await page.getByRole('button', { name: 'Clear' }).click();
