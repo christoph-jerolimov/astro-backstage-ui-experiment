@@ -620,3 +620,47 @@
   background: var(--bui-bg-danger);
   border: 1px solid var(--status-critical);
 }
+
+/* ---- Account menu ---- */
+
+.user-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 4px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+}
+
+.user-trigger[data-hovered] {
+  background: var(--bui-bg-neutral-2);
+}
+
+.user-trigger[data-focus-visible] {
+  outline: 2px solid var(--chart-series-1);
+  outline-offset: -2px;
+}
+
+/* ---- Session list ---- */
+
+.session-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.session-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--bui-border-1);
+}
+
+.session-list li:last-child {
+  border-bottom: none;
+}
