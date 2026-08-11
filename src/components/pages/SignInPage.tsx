@@ -104,6 +104,12 @@ export function SignInPage() {
           </form>
         </CardBody>
       </Card>
+
+      <Flex justify="center" mt="4">
+        <Text variant="body-small" color="secondary">
+          No account yet? <Link href={withBase('/pricing')}>See pricing</Link>
+        </Text>
+      </Flex>
     </>
   );
 }

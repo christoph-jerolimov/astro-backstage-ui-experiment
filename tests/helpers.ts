@@ -46,6 +46,26 @@ export async function clickAndNavigate(
   }).toPass({ timeout: 20000 });
 }
 
+/**
+ * Clicks something react-aria owns until an attribute reaches the value the
+ * click is supposed to produce.
+ *
+ * Same swallowed-press problem as `clickAndNavigate`, but for controls that
+ * toggle: a blind retry would undo the first click, so this checks the
+ * attribute before pressing again.
+ */
+export async function clickUntilAttribute(
+  target: Locator,
+  attribute: string,
+  value: string,
+) {
+  await expect(async () => {
+    if ((await target.getAttribute(attribute)) === value) return;
+    await target.click();
+    await expect(target).toHaveAttribute(attribute, value, { timeout: 2000 });
+  }).toPass({ timeout: 20000 });
+}
+
 /** Seeds the persisted theme so the page renders dark from first paint. */
 export async function useDarkTheme(page: Page) {
   await page.addInitScript(() =>
