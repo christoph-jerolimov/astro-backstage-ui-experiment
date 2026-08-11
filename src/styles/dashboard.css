@@ -1245,3 +1245,60 @@
   padding: 40px 20px;
   text-align: center;
 }
+
+/* ---- Permission matrix ----
+   Hand-rolled rather than the data table: every cell is a control, and the
+   row header is the only text in the row. */
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.matrix th,
+.matrix td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--bui-border-1);
+}
+
+.matrix thead th {
+  vertical-align: bottom;
+  font-size: 13px;
+  color: var(--bui-fg-primary);
+}
+
+.matrix thead th span {
+  display: block;
+}
+
+.matrix-sub {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--bui-fg-secondary);
+}
+
+.matrix tbody th[scope='row'] {
+  font-weight: 400;
+  color: var(--bui-fg-secondary);
+}
+
+.matrix td {
+  text-align: center;
+  width: 120px;
+}
+
+.matrix .matrix-group th {
+  padding-top: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bui-fg-secondary);
+  border-bottom: none;
+}
+
+.matrix td .bui-Checkbox {
+  display: inline-flex;
+}
