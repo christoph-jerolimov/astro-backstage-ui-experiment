@@ -36,6 +36,20 @@ export const PAGES = [
     expects: ['Mean time to resolve', 'INC-241', 'Incident log'],
   },
   {
+    name: 'notifications',
+    path: '/notifications',
+    navLabel: 'Notifications',
+    heading: 'Notifications',
+    expects: ['Inbox', 'INC-241 opened on notification-hub'],
+  },
+  {
+    name: 'docs',
+    path: '/docs',
+    navLabel: 'Docs',
+    heading: 'Docs',
+    expects: ['Getting started', 'Pipelines'],
+  },
+  {
     name: 'settings',
     path: '/settings',
     navLabel: 'Settings',

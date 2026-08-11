@@ -32,6 +32,8 @@ const NAV_ITEMS = [
   { id: 'services', label: 'Services', href: '/services', icon: IconBox },
   { id: 'catalog', label: 'Catalog', href: '/catalog', icon: IconTable },
   { id: 'incidents', label: 'Incidents', href: '/incidents', icon: IconBell },
+  { id: 'notifications', label: 'Notifications', href: '/notifications', icon: IconInbox },
+  { id: 'docs', label: 'Docs', href: '/docs', icon: IconBook },
   { id: 'settings', label: 'Settings', href: '/settings', icon: IconGear },
 ] as const;
 
@@ -207,6 +209,24 @@ function IconBell() {
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
       <path d="M8 2a4 4 0 0 0-4 4v3l-1.5 2.5h11L12 9V6a4 4 0 0 0-4-4z" />
       <path d="M6.5 13.5a1.5 1.5 0 0 0 3 0" />
+    </svg>
+  );
+}
+
+function IconInbox() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <path d="M1.5 9.5h3l1 2h5l1-2h3" />
+      <path d="M2.5 9.5l1.5-6h8l1.5 6v3a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1z" />
+    </svg>
+  );
+}
+
+function IconBook() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <path d="M2.5 2.5h4a2 2 0 0 1 2 2v9a1.5 1.5 0 0 0-1.5-1.5h-4.5z" />
+      <path d="M13.5 2.5h-4a2 2 0 0 0-2 2v9a1.5 1.5 0 0 1 1.5-1.5h4.5z" />
     </svg>
   );
 }

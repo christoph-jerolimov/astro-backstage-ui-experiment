@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from 'astro:content';
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import { DocsArticleFrame } from '../../components/pages/DocsArticleFrame';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  return docs.map((doc) => ({ params: { slug: doc.id }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+
+const all = (await getCollection('docs')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const siblings = all.map((entry) => ({
+  slug: entry.id,
+  title: entry.data.title,
+}));
+---
+
+<DashboardLayout title={`${doc.data.title} – Acme Cloud`} current="docs">
+  <DocsArticleFrame
+    title={doc.data.title}
+    description={doc.data.description}
+    updated={doc.data.updated}
+    slug={doc.id}
+    siblings={siblings}
+    client:load
+  >
+    <article class="prose">
+      <Content />
+    </article>
+  </DocsArticleFrame>
+</DashboardLayout>
