@@ -1363,3 +1363,23 @@
   gap: 2px;
   min-width: 0;
 }
+
+/* A usage bar. The numbers beside it carry the meaning; this is the second
+   reading, and going over is stated in words as well as colour. */
+.meter {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bui-bg-neutral-2);
+  overflow: hidden;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--chart-series-1);
+}
+
+.meter[data-over='true'] span {
+  background: var(--status-warning);
+}
