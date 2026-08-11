@@ -28,6 +28,7 @@ import { withBase } from './base';
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', href: '/', icon: IconGrid },
+  { id: 'search', label: 'Search', href: '/search', icon: IconSearch },
   { id: 'deployments', label: 'Deployments', href: '/deployments', icon: IconRocket },
   { id: 'services', label: 'Services', href: '/services', icon: IconBox },
   { id: 'catalog', label: 'Catalog', href: '/catalog', icon: IconTable },
@@ -173,6 +174,15 @@ function IconGrid() {
       <rect x="9.5" y="1.5" width="5" height="5" rx="1" />
       <rect x="1.5" y="9.5" width="5" height="5" rx="1" />
       <rect x="9.5" y="9.5" width="5" height="5" rx="1" />
+    </svg>
+  );
+}
+
+function IconSearch() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <circle cx="7" cy="7" r="4.5" />
+      <path d="M10.5 10.5l4 4" strokeLinecap="round" />
     </svg>
   );
 }

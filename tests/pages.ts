@@ -1,4 +1,4 @@
-/** The five routed pages, shared by the page and navigation specs. */
+/** The routed sidebar pages, shared by the page and navigation specs. */
 export const PAGES = [
   {
     name: 'overview',
@@ -6,6 +6,13 @@ export const PAGES = [
     navLabel: 'Overview',
     heading: 'Platform overview',
     expects: ['Deployments (7d)', 'Deploy success rate', 'catalog-api'],
+  },
+  {
+    name: 'search',
+    path: '/search',
+    navLabel: 'Search',
+    heading: 'Search',
+    expects: ['Type something to search', 'Everything'],
   },
   {
     name: 'deployments',
