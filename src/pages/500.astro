@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { ServerErrorPage } from '../components/pages/ServerErrorPage';
+---
+
+<DashboardLayout title="Something went wrong – Acme Cloud">
+  <ServerErrorPage client:load />
+</DashboardLayout>

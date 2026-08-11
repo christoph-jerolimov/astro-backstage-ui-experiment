@@ -1189,3 +1189,21 @@
   border-color: var(--chart-series-1);
   box-shadow: 0 0 0 2px var(--bui-bg-info);
 }
+
+/* The one thing on an error page worth copying down. */
+.request-id {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--bui-border-1);
+  border-radius: 8px;
+  background: var(--bui-bg-neutral-1);
+  width: fit-content;
+}
+
+.request-id code {
+  font-family: var(--bui-font-mono, monospace);
+  font-size: 13px;
+  color: var(--bui-fg-primary);
+}
