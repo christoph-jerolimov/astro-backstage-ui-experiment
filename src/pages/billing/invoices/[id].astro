@@ -1,0 +1,18 @@
+---
+import DashboardLayout from '../../../layouts/DashboardLayout.astro';
+import { InvoiceDetailPage } from '../../../components/pages/InvoiceDetailPage';
+import { INVOICES } from '../../../components/dashboard/billing';
+
+export function getStaticPaths() {
+  return INVOICES.map((invoice) => ({
+    params: { id: invoice.id },
+    props: { invoice },
+  }));
+}
+
+const { invoice } = Astro.props;
+---
+
+<DashboardLayout title={`${invoice.id} – Acme Cloud`}>
+  <InvoiceDetailPage invoice={invoice} client:load />
+</DashboardLayout>
