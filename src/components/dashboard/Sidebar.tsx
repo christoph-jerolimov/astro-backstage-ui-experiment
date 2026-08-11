@@ -27,6 +27,10 @@ import {
 import { withBase } from './base';
 import { OPEN_EVENT } from './CommandPalette';
 
+// Deliberately one flat list. Grouping these under react-aria's
+// ListBoxSection stops mouse clicks from following the item's href — keyboard
+// Enter still navigates, a real click does not — so the headings would cost
+// the thing the nav exists for. The command palette does the grouping instead.
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', href: '/', icon: IconGrid },
   { id: 'search', label: 'Search', href: '/search', icon: IconSearch },
@@ -36,6 +40,7 @@ const NAV_ITEMS = [
   { id: 'incidents', label: 'Incidents', href: '/incidents', icon: IconBell },
   { id: 'notifications', label: 'Notifications', href: '/notifications', icon: IconInbox },
   { id: 'docs', label: 'Docs', href: '/docs', icon: IconBook },
+  { id: 'team', label: 'Team', href: '/team', icon: IconPeople },
   { id: 'settings', label: 'Settings', href: '/settings', icon: IconGear },
 ] as const;
 
@@ -196,6 +201,16 @@ function IconGrid() {
       <rect x="9.5" y="1.5" width="5" height="5" rx="1" />
       <rect x="1.5" y="9.5" width="5" height="5" rx="1" />
       <rect x="9.5" y="9.5" width="5" height="5" rx="1" />
+    </svg>
+  );
+}
+
+function IconPeople() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <circle cx="6" cy="5.5" r="2.5" />
+      <path d="M1.5 13.5c0-2.2 2-3.5 4.5-3.5s4.5 1.3 4.5 3.5" />
+      <path d="M10.5 3.5a2.5 2.5 0 0 1 0 4M12 10c1.6.4 2.5 1.5 2.5 3.5" />
     </svg>
   );
 }

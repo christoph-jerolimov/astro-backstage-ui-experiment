@@ -57,6 +57,13 @@ export const PAGES = [
     expects: ['Getting started', 'Pipelines'],
   },
   {
+    name: 'team',
+    path: '/team',
+    navLabel: 'Team',
+    heading: 'Team',
+    expects: ['Ada Lovelace', 'Billing admin', 'Pending invites'],
+  },
+  {
     name: 'settings',
     path: '/settings',
     navLabel: 'Settings',

@@ -20,6 +20,7 @@ export const PAGES: Destination[] = [
   { id: 'incidents', label: 'Incidents', href: '/incidents', keywords: 'outage sev on-call' },
   { id: 'notifications', label: 'Notifications', href: '/notifications', keywords: 'inbox alerts' },
   { id: 'docs', label: 'Docs', href: '/docs', keywords: 'documentation guides handbook' },
+  { id: 'team', label: 'Team', href: '/team', keywords: 'people members invite roles' },
   { id: 'settings', label: 'Settings', href: '/settings', keywords: 'preferences workspace' },
 ];
 
