@@ -15,6 +15,7 @@
     "@astrojs/react": "^6.0.2",
     "@backstage/ui": "^0.17.0",
     "astro": "^7.2.0",
+    "cmdk": "^1.1.1",
     "react": "^18.3.1",
     "react-aria-components": "~1.17.0",
     "react-dom": "^18.3.1",
