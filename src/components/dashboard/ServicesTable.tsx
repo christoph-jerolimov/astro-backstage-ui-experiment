@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Cell,
   CellText,
@@ -7,6 +8,8 @@ import {
   TableHeader,
   TableRoot,
 } from '@backstage/ui';
+import { DetailDrawer } from './DetailDrawer';
+import { serviceDetail } from './detail';
 import { StatusPill, type StatusTone } from './StatusPill';
 import { withBase } from './base';
 import { SERVICES, type Service, type ServiceStatus } from './data';
@@ -22,9 +25,17 @@ interface ServicesTableProps {
 }
 
 export function ServicesTable({ services = SERVICES }: ServicesTableProps) {
+  // The row whose details are open in the drawer; null when it is closed.
+  const [detail, setDetail] = useState<Service | null>(null);
+
   return (
-    <div className="table-scroll">
-      <TableRoot aria-label="Services">
+    <div className="table-scroll" data-row-action="true">
+      <TableRoot
+        aria-label="Services"
+        onRowAction={(key) =>
+          setDetail(services.find((service) => service.name === key) ?? null)
+        }
+      >
         <TableHeader>
           <Column isRowHeader>Service</Column>
           <Column>Owner</Column>
@@ -35,7 +46,7 @@ export function ServicesTable({ services = SERVICES }: ServicesTableProps) {
         </TableHeader>
         <TableBody>
           {services.map((service) => (
-            <Row key={service.name}>
+            <Row key={service.name} id={service.name}>
               <CellText
                 title={service.name}
                 href={withBase(`/services/${service.name}`)}
@@ -51,6 +62,14 @@ export function ServicesTable({ services = SERVICES }: ServicesTableProps) {
           ))}
         </TableBody>
       </TableRoot>
+
+      {detail && (
+        <DetailDrawer
+          isOpen
+          onOpenChange={(open) => !open && setDetail(null)}
+          {...serviceDetail(detail)}
+        />
+      )}
     </div>
   );
 }

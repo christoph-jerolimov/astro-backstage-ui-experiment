@@ -863,3 +863,95 @@
   color: var(--status-good);
   flex: none;
 }
+
+/* ---- Detail drawer ----
+   The right-hand panel a table row opens. Like the mobile nav drawer it
+   portals to the end of <body>, so it is not constrained by the app grid;
+   react-aria owns the behaviour and these rules are presentational. */
+
+.detail-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.detail-panel {
+  width: min(92vw, 420px);
+  height: 100%;
+  box-sizing: border-box;
+  background: var(--bui-bg-app);
+  border-left: 1px solid var(--bui-border-1);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.28);
+  display: flex;
+  overflow-y: auto;
+}
+
+.detail-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.detail-list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-list > div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.detail-list dt {
+  font-size: 13px;
+  color: var(--bui-fg-secondary);
+}
+
+.detail-list dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--bui-fg-primary);
+}
+
+.detail-note {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--bui-fg-secondary);
+}
+
+.detail-foot {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .detail-list > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* Rows that open the detail drawer are interactive; the ones in read-only
+   tables are not, so the cursor is opted into rather than global. */
+.table-scroll[data-row-action='true'] tbody tr {
+  cursor: pointer;
+}

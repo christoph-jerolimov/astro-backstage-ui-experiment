@@ -15,6 +15,8 @@ import {
   Text,
 } from '@backstage/ui';
 import { PageHeader } from '../dashboard/PageHeader';
+import { DetailDrawer } from '../dashboard/DetailDrawer';
+import { deploymentDetail } from '../dashboard/detail';
 import { StatTile } from '../dashboard/StatTile';
 import { LineChart } from '../dashboard/charts/LineChart';
 import { Sparkline } from '../dashboard/charts/Sparkline';
@@ -23,11 +25,14 @@ import {
   DAYS,
   DEPLOYMENTS,
   RANGE_OPTIONS,
+  type Deployment,
   type RangeKey,
 } from '../dashboard/data';
 
 export function DeploymentsPage() {
   const [range, setRange] = useState<RangeKey>('30d');
+  // The row whose details are open in the drawer; null when it is closed.
+  const [detail, setDetail] = useState<Deployment | null>(null);
 
   const days = useMemo(() => {
     const count = RANGE_OPTIONS.find((option) => option.id === range)!.days;
@@ -117,8 +122,13 @@ export function DeploymentsPage() {
             </Text>
           </CardHeader>
           <CardBody>
-            <div className="table-scroll">
-              <TableRoot aria-label="Recent deployments">
+            <div className="table-scroll" data-row-action="true">
+              <TableRoot
+                aria-label="Recent deployments"
+                onRowAction={(key) =>
+                  setDetail(DEPLOYMENTS.find((d) => d.id === key) ?? null)
+                }
+              >
                 <TableHeader>
                   <Column isRowHeader>Deployment</Column>
                   <Column>Service</Column>
@@ -130,7 +140,7 @@ export function DeploymentsPage() {
                 </TableHeader>
                 <TableBody>
                   {DEPLOYMENTS.map((deployment) => (
-                    <Row key={deployment.id}>
+                    <Row key={deployment.id} id={deployment.id}>
                       <CellText title={deployment.id} />
                       <CellText title={deployment.service} />
                       <CellText title={deployment.environment} />
@@ -163,6 +173,14 @@ export function DeploymentsPage() {
           </CardBody>
         </Card>
       </Flex>
+
+      {detail && (
+        <DetailDrawer
+          isOpen
+          onOpenChange={(open) => !open && setDetail(null)}
+          {...deploymentDetail(detail)}
+        />
+      )}
     </>
   );
 }
