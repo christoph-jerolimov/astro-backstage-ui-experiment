@@ -27,7 +27,8 @@ export const PAGES: Destination[] = [
 export const ACCOUNT: Destination[] = [
   { id: 'profile', label: 'Profile', href: '/profile', keywords: 'account me ada' },
   { id: 'api-keys', label: 'API keys', href: '/api-keys', keywords: 'tokens secrets credentials' },
-  { id: 'billing', label: 'Billing', href: '/billing', keywords: 'plan seats usage invoices payment' },
+  { id: 'billing', label: 'Billing', href: '/billing', keywords: 'plan seats usage payment' },
+  { id: 'invoices', label: 'Invoices', href: '/billing/invoices', keywords: 'receipts bills history' },
   { id: 'audit', label: 'Audit log', href: '/audit', keywords: 'history activity who did what' },
   { id: 'organizations', label: 'Organizations', href: '/organizations', keywords: 'workspaces switch tenant' },
   { id: 'roles', label: 'Roles', href: '/roles', keywords: 'permissions access grants' },
