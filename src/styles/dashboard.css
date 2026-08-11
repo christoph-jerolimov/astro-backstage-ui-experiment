@@ -596,3 +596,27 @@
   outline: 2px solid var(--chart-series-1);
   outline-offset: 2px;
 }
+
+/* ---- Centred shell (sign-in and other standalone pages) ---- */
+
+.centered-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+.centered-panel {
+  width: 100%;
+  max-width: 420px;
+}
+
+.form-error {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--status-critical);
+  background: var(--bui-bg-danger);
+  border: 1px solid var(--status-critical);
+}
