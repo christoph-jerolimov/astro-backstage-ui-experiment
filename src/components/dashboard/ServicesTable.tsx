@@ -7,39 +7,20 @@ import {
   TableHeader,
   TableRoot,
 } from '@backstage/ui';
-import { SERVICES, type ServiceStatus } from './data';
+import { StatusPill, type StatusTone } from './StatusPill';
+import { SERVICES, type Service, type ServiceStatus } from './data';
 
-const STATUS_LABEL: Record<ServiceStatus, string> = {
-  healthy: 'Healthy',
-  degraded: 'Degraded',
-  down: 'Down',
+const STATUS: Record<ServiceStatus, { tone: StatusTone; label: string }> = {
+  healthy: { tone: 'good', label: 'Healthy' },
+  degraded: { tone: 'warning', label: 'Degraded' },
+  down: { tone: 'critical', label: 'Down' },
 };
 
-function StatusCell({ status }: { status: ServiceStatus }) {
-  return (
-    <span className={`status-cell status-${status}`}>
-      {status === 'healthy' && (
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-          <path d="M2.5 7.5l3 3 6-7" />
-        </svg>
-      )}
-      {status === 'degraded' && (
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-          <path d="M7 1.5l6 11H1z" />
-          <path d="M7 6v3M7 10.8v.2" strokeWidth="1.8" />
-        </svg>
-      )}
-      {status === 'down' && (
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-          <path d="M3 3l8 8M11 3l-8 8" />
-        </svg>
-      )}
-      {STATUS_LABEL[status]}
-    </span>
-  );
+interface ServicesTableProps {
+  services?: Service[];
 }
 
-export function ServicesTable() {
+export function ServicesTable({ services = SERVICES }: ServicesTableProps) {
   return (
     <TableRoot aria-label="Services">
       <TableHeader>
@@ -51,7 +32,7 @@ export function ServicesTable() {
         <Column>Status</Column>
       </TableHeader>
       <TableBody>
-        {SERVICES.map((service) => (
+        {services.map((service) => (
           <Row key={service.name}>
             <CellText title={service.name} />
             <CellText title={service.owner} />
@@ -59,7 +40,7 @@ export function ServicesTable() {
             <CellText title={service.uptime} />
             <CellText title={String(service.deploysPerWeek)} />
             <Cell>
-              <StatusCell status={service.status} />
+              <StatusPill {...STATUS[service.status]} />
             </Cell>
           </Row>
         ))}

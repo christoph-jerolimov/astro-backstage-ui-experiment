@@ -1,25 +1,27 @@
 // Backstage UI has no sidebar component, so this one is built directly on
-// react-aria-components' ListBox for keyboard navigation and selection.
-import type { Key } from 'react-aria-components';
+// react-aria-components' ListBox. Items carry an `href`, so react-aria renders
+// them as real links and the browser handles navigation between the Astro
+// pages. The active page is expressed as the ListBox's controlled selection —
+// react-aria does not forward `aria-current` to the DOM, and inside a listbox
+// `aria-selected` is the semantic that assistive tech actually reads.
 import { ListBox, ListBoxItem } from 'react-aria-components';
 import { Avatar, Text } from '@backstage/ui';
 
 const NAV_ITEMS = [
-  { id: 'overview', label: 'Overview', icon: IconGrid },
-  { id: 'deployments', label: 'Deployments', icon: IconRocket },
-  { id: 'services', label: 'Services', icon: IconBox },
-  { id: 'incidents', label: 'Incidents', icon: IconBell },
-  { id: 'settings', label: 'Settings', icon: IconGear },
+  { id: 'overview', label: 'Overview', href: '/', icon: IconGrid },
+  { id: 'deployments', label: 'Deployments', href: '/deployments', icon: IconRocket },
+  { id: 'services', label: 'Services', href: '/services', icon: IconBox },
+  { id: 'incidents', label: 'Incidents', href: '/incidents', icon: IconBell },
+  { id: 'settings', label: 'Settings', href: '/settings', icon: IconGear },
 ] as const;
 
 export type NavKey = (typeof NAV_ITEMS)[number]['id'];
 
 interface SidebarProps {
-  selected: NavKey;
-  onSelect: (key: NavKey) => void;
+  current: NavKey;
 }
 
-export function Sidebar({ selected, onSelect }: SidebarProps) {
+export function Sidebar({ current }: SidebarProps) {
   return (
     <aside className="app-sidebar">
       <div className="sidebar-brand">
@@ -35,15 +37,16 @@ export function Sidebar({ selected, onSelect }: SidebarProps) {
         aria-label="Main navigation"
         selectionMode="single"
         disallowEmptySelection
-        selectedKeys={[selected]}
-        onSelectionChange={(keys: 'all' | Iterable<Key>) => {
-          if (keys === 'all') return;
-          const [key] = keys;
-          if (key) onSelect(key as NavKey);
-        }}
+        selectedKeys={[current]}
       >
-        {NAV_ITEMS.map(({ id, label, icon: Icon }) => (
-          <ListBoxItem key={id} id={id} className="sidebar-item" textValue={label}>
+        {NAV_ITEMS.map(({ id, label, href, icon: Icon }) => (
+          <ListBoxItem
+            key={id}
+            id={id}
+            href={href}
+            className="sidebar-item"
+            textValue={label}
+          >
             <Icon />
             {label}
           </ListBoxItem>

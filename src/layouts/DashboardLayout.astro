@@ -1,0 +1,21 @@
+---
+import Layout from './Layout.astro';
+import { Sidebar } from '../components/dashboard/Sidebar';
+import type { NavKey } from '../components/dashboard/Sidebar';
+
+interface Props {
+  title: string;
+  current: NavKey;
+}
+
+const { title, current } = Astro.props;
+---
+
+<Layout title={title}>
+  <div class="app-shell">
+    <Sidebar current={current} client:load />
+    <main class="app-main">
+      <slot />
+    </main>
+  </div>
+</Layout>
