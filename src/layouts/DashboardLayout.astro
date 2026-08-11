@@ -5,7 +5,8 @@ import type { NavKey } from '../components/dashboard/Sidebar';
 
 interface Props {
   title: string;
-  current: NavKey;
+  /** Omitted for pages that are not in the sidebar, e.g. 404. */
+  current?: NavKey;
 }
 
 const { title, current } = Astro.props;
