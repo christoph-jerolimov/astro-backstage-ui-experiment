@@ -1,9 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { PAGES } from './pages';
+import { waitForHydration } from './helpers';
 
 test.describe('Sidebar routing', () => {
   test('every sidebar item navigates to its own page', async ({ page }) => {
     await page.goto('/');
+    await waitForHydration(page);
 
     const nav = page.getByRole('listbox', { name: 'Main navigation' });
     await expect(nav.getByRole('option')).toHaveCount(PAGES.length);
@@ -25,6 +27,7 @@ test.describe('Sidebar routing', () => {
     page,
   }) => {
     await page.goto('/');
+    await waitForHydration(page);
     const nav = page.getByRole('listbox', { name: 'Main navigation' });
 
     for (const target of PAGES) {
@@ -38,6 +41,7 @@ test.describe('Sidebar routing', () => {
     page,
   }) => {
     await page.goto('/');
+    await waitForHydration(page);
     await expect(page.locator('html')).toHaveAttribute(
       'data-theme-mode',
       'light',

@@ -6,6 +6,7 @@
 // `aria-selected` is the semantic that assistive tech actually reads.
 import { ListBox, ListBoxItem } from 'react-aria-components';
 import { Avatar, Text } from '@backstage/ui';
+import { withBase } from './base';
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', href: '/', icon: IconGrid },
@@ -43,7 +44,7 @@ export function Sidebar({ current }: SidebarProps) {
           <ListBoxItem
             key={id}
             id={id}
-            href={href}
+            href={withBase(href)}
             className="sidebar-item"
             textValue={label}
           >
