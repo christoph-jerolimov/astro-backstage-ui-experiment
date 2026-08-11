@@ -1332,3 +1332,34 @@
     width: 100%;
   }
 }
+
+/* ---- Audit log ----
+   A sentence per entry rather than a row of columns: actor, verb and target
+   read as language, which is how people describe what happened. */
+
+.audit-list {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.audit-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bui-border-1);
+}
+
+.audit-list li:last-child {
+  border-bottom: none;
+}
+
+.audit-line {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}

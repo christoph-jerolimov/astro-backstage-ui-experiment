@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { AuditPage } from '../components/pages/AuditPage';
+---
+
+<DashboardLayout title="Audit log – Acme Cloud">
+  <AuditPage client:load />
+</DashboardLayout>
