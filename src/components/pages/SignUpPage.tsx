@@ -86,8 +86,9 @@ export function SignUpPage() {
                 minutes.
               </Text>
               <Text variant="body-small" color="secondary">
-                Wrong address?{' '}
-                <Link href={withBase('/signup')}>Start again</Link>
+                <Link href={withBase('/verify')}>Enter the code</Link> — or{' '}
+                <Link href={withBase('/signup')}>start again</Link> with a
+                different address.
               </Text>
             </Flex>
           </CardBody>

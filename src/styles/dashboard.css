@@ -1162,3 +1162,30 @@
 .rule-list li[data-met='true'] {
   color: var(--status-good);
 }
+
+/* One box per digit. Sized so six fit the narrowest panel we support. */
+.code-boxes {
+  display: flex;
+  gap: 8px;
+}
+
+.code-boxes input {
+  width: 100%;
+  min-width: 0;
+  height: 52px;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px solid var(--bui-border-1);
+  border-radius: 10px;
+  background: var(--bui-bg-app);
+  color: var(--bui-fg-primary);
+  font: inherit;
+  font-size: 22px;
+  text-align: center;
+  outline: none;
+}
+
+.code-boxes input:focus {
+  border-color: var(--chart-series-1);
+  box-shadow: 0 0 0 2px var(--bui-bg-info);
+}
