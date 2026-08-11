@@ -15,6 +15,8 @@ import {
   type ColumnConfig,
 } from '@backstage/ui';
 import { PageHeader } from '../dashboard/PageHeader';
+import { DetailDrawer } from '../dashboard/DetailDrawer';
+import { serviceDetail } from '../dashboard/detail';
 import { StatusPill, type StatusTone } from '../dashboard/StatusPill';
 import { withBase } from '../dashboard/base';
 import { SERVICES, type Service, type ServiceStatus } from '../dashboard/data';
@@ -81,6 +83,8 @@ export function CatalogPage() {
   const [selected, setSelected] = useState<Selection>(new Set<Key>());
   const [pageSize, setPageSize] = useState(10);
   const [offset, setOffset] = useState(0);
+  // The row whose details are open in the drawer; null when it is closed.
+  const [detail, setDetail] = useState<CatalogRow | null>(null);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -190,12 +194,13 @@ export function CatalogPage() {
             </Flex>
           </CardHeader>
           <CardBody>
-            <div className="table-scroll">
+            <div className="table-scroll" data-row-action="true">
               {/* Table renders its own grid label ("Data table"); it does not
                   accept aria-label. */}
               <Table
                 columnConfig={COLUMNS}
                 data={page}
+                rowConfig={{ onClick: setDetail }}
                 sort={{
                   descriptor: sort,
                   onSortChange: (descriptor) => {
@@ -233,6 +238,14 @@ export function CatalogPage() {
           </CardBody>
         </Card>
       </Flex>
+
+      {detail && (
+        <DetailDrawer
+          isOpen
+          onOpenChange={(open) => !open && setDetail(null)}
+          {...serviceDetail(detail)}
+        />
+      )}
     </>
   );
 }

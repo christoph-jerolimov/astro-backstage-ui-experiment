@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Card,
   CardBody,
@@ -13,6 +14,8 @@ import {
   Text,
 } from '@backstage/ui';
 import { PageHeader } from '../dashboard/PageHeader';
+import { DetailDrawer } from '../dashboard/DetailDrawer';
+import { incidentDetail } from '../dashboard/detail';
 import { StatTile } from '../dashboard/StatTile';
 import { StatusPill } from '../dashboard/StatusPill';
 import { ColumnChart } from '../dashboard/charts/ColumnChart';
@@ -52,6 +55,8 @@ function SeverityDot({ severity }: { severity: Severity }) {
 }
 
 export function IncidentsPage() {
+  // The row whose details are open in the drawer; null when it is closed.
+  const [detail, setDetail] = useState<Incident | null>(null);
   const open = INCIDENTS.filter((i) => i.status === 'open').length;
   const resolved = INCIDENTS.filter((i) => i.status === 'resolved').length;
 
@@ -115,8 +120,13 @@ export function IncidentsPage() {
             </Flex>
           </CardHeader>
           <CardBody>
-            <div className="table-scroll">
-              <TableRoot aria-label="Incidents">
+            <div className="table-scroll" data-row-action="true">
+              <TableRoot
+                aria-label="Incidents"
+                onRowAction={(key) =>
+                  setDetail(INCIDENTS.find((i) => i.id === key) ?? null)
+                }
+              >
                 <TableHeader>
                   <Column isRowHeader>Incident</Column>
                   <Column>Title</Column>
@@ -127,7 +137,7 @@ export function IncidentsPage() {
                 </TableHeader>
                 <TableBody>
                   {INCIDENTS.map((incident) => (
-                    <Row key={incident.id}>
+                    <Row key={incident.id} id={incident.id}>
                       <CellText title={incident.id} />
                       <CellText title={incident.title} />
                       <CellText title={incident.service} />
@@ -146,6 +156,14 @@ export function IncidentsPage() {
           </CardBody>
         </Card>
       </Flex>
+
+      {detail && (
+        <DetailDrawer
+          isOpen
+          onOpenChange={(open) => !open && setDetail(null)}
+          {...incidentDetail(detail)}
+        />
+      )}
     </>
   );
 }

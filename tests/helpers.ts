@@ -66,6 +66,20 @@ export async function clickUntilAttribute(
   }).toPass({ timeout: 20000 });
 }
 
+/**
+ * Clicks something react-aria owns until whatever it opens is on screen.
+ *
+ * Same swallowed-press problem as `clickAndNavigate`. Checking first also
+ * keeps the retry from clicking through an overlay that is already open.
+ */
+export async function clickUntilVisible(target: Locator, appears: Locator) {
+  await expect(async () => {
+    if (await appears.isVisible()) return;
+    await target.click();
+    await expect(appears).toBeVisible({ timeout: 2000 });
+  }).toPass({ timeout: 20000 });
+}
+
 /** Seeds the persisted theme so the page renders dark from first paint. */
 export async function useDarkTheme(page: Page) {
   await page.addInitScript(() =>
