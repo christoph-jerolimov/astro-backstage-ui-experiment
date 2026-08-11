@@ -1,0 +1,21 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!--
+  A second shell for pages that stand outside the app: no sidebar, no page
+  header, content centred in the viewport.
+-->
+<Layout title={title}>
+  <main class="centered-shell">
+    <div class="centered-panel">
+      <slot />
+    </div>
+  </main>
+</Layout>
