@@ -41,8 +41,6 @@ test.describe('Catalog table', () => {
 
     // react-aria hides the real input behind its label, so the label is the
     // clickable target (index 0 is the select-all box in the header)
-    // react-aria hides the real input behind its label, so the label is the
-    // clickable target (index 0 is the select-all box in the header)
     const boxes = grid(page).locator('label.bui-Checkbox');
     await boxes.nth(1).click();
     await expect(page.getByText('1 selected')).toBeVisible();
