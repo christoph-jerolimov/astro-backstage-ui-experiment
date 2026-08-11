@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { clickAndNavigate, settle, useDarkTheme, waitForHydration } from './helpers';
+import {
+  clickAndNavigate,
+  clickUntilAttribute,
+  settle,
+  useDarkTheme,
+  waitForHydration,
+} from './helpers';
 
 // Backstage UI's Table does not forward aria-label, so the grid is always
 // labelled "Data table"; there is only one on this page.
@@ -31,7 +37,9 @@ test.describe('Catalog table', () => {
     const firstCell = () => rows(page).nth(1).getByRole('rowheader');
     await expect(firstCell()).toHaveText(/alert-router/);
 
-    await page.getByRole('columnheader', { name: 'Service' }).click();
+    const header = page.getByRole('columnheader', { name: 'Service' });
+    await expect(header).toHaveAttribute('aria-sort', 'ascending');
+    await clickUntilAttribute(header, 'aria-sort', 'descending');
     await expect(firstCell()).toHaveText(/webhook-dispatcher/);
   });
 

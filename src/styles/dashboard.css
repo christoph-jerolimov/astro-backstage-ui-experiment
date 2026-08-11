@@ -819,3 +819,47 @@
   font-size: 14px;
   color: var(--bui-fg-primary);
 }
+
+/* ---- Marketing (pricing) ---- */
+
+.marketing {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.price {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--bui-fg-primary);
+}
+
+.feature-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--bui-fg-secondary);
+}
+
+.feature-list svg {
+  color: var(--status-good);
+  flex: none;
+}

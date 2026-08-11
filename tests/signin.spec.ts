@@ -13,6 +13,11 @@ test.describe('Sign in', () => {
     ).toHaveCount(0);
     // but the theme toggle still works here
     await expect(page.getByRole('switch', { name: 'Dark mode' })).toBeVisible();
+    // the only way into the pricing page from inside the demo
+    await expect(page.getByRole('link', { name: 'See pricing' })).toHaveAttribute(
+      'href',
+      /\/pricing$/,
+    );
   });
 
   test('validates the email before the password', async ({ page }) => {
