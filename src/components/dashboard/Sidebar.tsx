@@ -23,6 +23,7 @@ const NAV_ITEMS = [
   { id: 'overview', label: 'Overview', href: '/', icon: IconGrid },
   { id: 'deployments', label: 'Deployments', href: '/deployments', icon: IconRocket },
   { id: 'services', label: 'Services', href: '/services', icon: IconBox },
+  { id: 'catalog', label: 'Catalog', href: '/catalog', icon: IconTable },
   { id: 'incidents', label: 'Incidents', href: '/incidents', icon: IconBell },
   { id: 'settings', label: 'Settings', href: '/settings', icon: IconGear },
 ] as const;
@@ -159,6 +160,15 @@ function IconRocket() {
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
       <path d="M8 12c3.5-2 5-5.5 5-9-3.5 0-7 1.5-9 5l-2.5.5L4 11l2.5 2.5L7 11z" />
       <circle cx="9.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function IconTable() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <rect x="1.5" y="2.5" width="13" height="11" rx="1.5" />
+      <path d="M1.5 6.5h13M6 6.5v7" />
     </svg>
   );
 }

@@ -48,7 +48,7 @@ test.describe('Services page', () => {
 
     await page.getByRole('searchbox', { name: 'Filter services' }).fill('Go');
 
-    await expect(page.getByText('3 of 6 services')).toBeVisible();
+    await expect(page.getByText('11 of 24 services')).toBeVisible();
     await expect(table.getByText('search-indexer')).toBeVisible();
     await expect(table.getByText('billing-worker')).toHaveCount(0);
   });
@@ -60,7 +60,7 @@ test.describe('Services page', () => {
     await page.getByRole('button', { name: /Owner/ }).click();
     await page.getByRole('option', { name: 'team-signal' }).click();
 
-    await expect(page.getByText('2 of 6 services')).toBeVisible();
+    await expect(page.getByText('6 of 24 services')).toBeVisible();
   });
 });
 

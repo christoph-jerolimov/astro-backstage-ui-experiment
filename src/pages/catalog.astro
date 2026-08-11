@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { CatalogPage } from '../components/pages/CatalogPage';
+---
+
+<DashboardLayout title="Catalog – Acme Cloud" current="catalog">
+  <CatalogPage client:load />
+</DashboardLayout>

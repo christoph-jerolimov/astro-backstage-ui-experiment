@@ -1,13 +1,16 @@
 import { test, expect } from '@playwright/test';
-import { settle, useDarkTheme, waitForHydration } from './helpers';
+import { clickAndNavigate, settle, useDarkTheme, waitForHydration } from './helpers';
 
 test.describe('Service detail', () => {
   test('is reachable from the catalog', async ({ page }) => {
     await page.goto('/services');
     await waitForHydration(page);
 
-    await page.getByRole('link', { name: 'catalog-api' }).click();
-    await page.waitForURL('**/services/catalog-api');
+    await clickAndNavigate(
+      page,
+      page.getByRole('link', { name: 'catalog-api' }),
+      /\/services\/catalog-api$/,
+    );
     await expect(
       page.getByRole('heading', { name: 'catalog-api', exact: true }),
     ).toBeVisible();
@@ -64,10 +67,13 @@ test.describe('Service detail', () => {
     await page.goto('/services/catalog-api');
     await waitForHydration(page);
 
-    await page.getByRole('navigation', { name: 'Breadcrumb' })
-      .getByRole('link', { name: 'Services' })
-      .click();
-    await page.waitForURL('**/services');
+    await clickAndNavigate(
+      page,
+      page
+        .getByRole('navigation', { name: 'Breadcrumb' })
+        .getByRole('link', { name: 'Services' }),
+      /\/services$/,
+    );
     await expect(
       page.getByRole('heading', { name: 'Services', exact: true }),
     ).toBeVisible();

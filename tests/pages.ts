@@ -19,7 +19,14 @@ export const PAGES = [
     path: '/services',
     navLabel: 'Services',
     heading: 'Services',
-    expects: ['Catalog', 'metrics-collector', '6 of 6 services'],
+    expects: ['Catalog', 'metrics-collector', '24 of 24 services'],
+  },
+  {
+    name: 'catalog',
+    path: '/catalog',
+    navLabel: 'Catalog',
+    heading: 'Catalog',
+    expects: ['24 of 24 services', 'catalog-api'],
   },
   {
     name: 'incidents',

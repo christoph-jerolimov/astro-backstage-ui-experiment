@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 
 /**
  * Every page is server-rendered first, so its controls exist in the DOM before
@@ -14,6 +14,36 @@ export async function waitForHydration(page: Page) {
       document.querySelectorAll('astro-island[ssr]').length === 0
     );
   });
+  // Clearing the marker means React has mounted, but react-aria attaches its
+  // press handling in effects that run just after. Clicking inside that gap
+  // gets swallowed — the press is captured but the navigation never happens —
+  // so give the commit a couple of frames to settle.
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+}
+
+/**
+ * Clicks something react-aria owns and waits for the navigation it should
+ * cause, retrying if the press is swallowed.
+ *
+ * react-aria attaches its press handling in effects that land a beat after the
+ * island marker clears, and a click inside that window is captured without
+ * performing the navigation. It is intermittent — the same click succeeds on a
+ * retry — so the assertion retries rather than waiting a fixed time.
+ */
+export async function clickAndNavigate(
+  page: Page,
+  target: Locator,
+  url: RegExp,
+) {
+  await expect(async () => {
+    await target.click();
+    await expect(page).toHaveURL(url, { timeout: 2000 });
+  }).toPass({ timeout: 20000 });
 }
 
 /** Seeds the persisted theme so the page renders dark from first paint. */
