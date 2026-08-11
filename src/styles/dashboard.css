@@ -548,3 +548,27 @@
     min-width: 620px;
   }
 }
+
+/* ---- Not found ---- */
+
+.notfound-code {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--chart-series-1);
+}
+
+.suggestion-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.suggestion-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}

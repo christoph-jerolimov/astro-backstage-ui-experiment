@@ -30,17 +30,17 @@ const NAV_ITEMS = [
 export type NavKey = (typeof NAV_ITEMS)[number]['id'];
 
 interface SidebarProps {
-  current: NavKey;
+  /** Omitted on pages that are not part of the navigation. */
+  current?: NavKey;
 }
 
-function NavList({ current, label }: { current: NavKey; label: string }) {
+function NavList({ current, label }: { current?: NavKey; label: string }) {
   return (
     <ListBox
       className="sidebar-nav"
       aria-label={label}
       selectionMode="single"
-      disallowEmptySelection
-      selectedKeys={[current]}
+      selectedKeys={current ? [current] : []}
     >
       {NAV_ITEMS.map(({ id, label: itemLabel, href, icon: Icon }) => (
         <ListBoxItem
