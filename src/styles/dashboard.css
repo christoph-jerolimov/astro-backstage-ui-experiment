@@ -1383,3 +1383,64 @@
 .meter[data-over='true'] span {
   background: var(--status-warning);
 }
+
+/* ---- Invoice ---- */
+
+.invoice-parties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.invoice-table th,
+.invoice-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--bui-border-1);
+}
+
+.invoice-table thead th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--bui-fg-secondary);
+}
+
+.invoice-table td:last-child,
+.invoice-table th:last-child,
+.invoice-table tfoot td {
+  text-align: right;
+}
+
+.invoice-table tfoot th {
+  text-align: right;
+  font-weight: 400;
+  color: var(--bui-fg-secondary);
+}
+
+.invoice-table tfoot .invoice-total th,
+.invoice-table tfoot .invoice-total td {
+  font-weight: 700;
+  color: var(--bui-fg-primary);
+  border-bottom: none;
+}
+
+/* Printing a receipt should give a receipt, not a screenshot of an app. */
+@media print {
+  .app-sidebar,
+  .bui-Header .bui-Switch,
+  .breadcrumb,
+  .palette-trigger {
+    display: none !important;
+  }
+
+  .app-shell {
+    display: block;
+  }
+}
