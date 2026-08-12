@@ -1644,3 +1644,104 @@
 .board-empty {
   padding: 12px 4px;
 }
+
+/* ---- Calendar ----
+   Seven columns whatever the width; below the breakpoint the cells lose their
+   chips and keep the dates, because a month grid that reflows is not a month. */
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.calendar-weekday {
+  padding: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bui-fg-secondary);
+}
+
+.calendar-blank {
+  min-height: 84px;
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 84px;
+  padding: 6px;
+  border: 1px solid var(--bui-border-1);
+  border-radius: 8px;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.calendar-day:hover {
+  background: var(--bui-bg-neutral-1);
+}
+
+.calendar-day[data-selected='true'] {
+  border-color: var(--chart-series-1);
+  background: var(--bui-bg-info);
+}
+
+.calendar-day[data-today='true'] .calendar-date {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--chart-series-1);
+  color: #fff;
+}
+
+.calendar-date {
+  font-size: 13px;
+  color: var(--bui-fg-primary);
+}
+
+.calendar-events {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.calendar-chip {
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--bui-bg-neutral-2);
+  color: var(--bui-fg-secondary);
+}
+
+.calendar-chip[data-kind='release'] {
+  background: var(--bui-bg-info);
+  color: var(--chart-series-1);
+}
+
+.calendar-chip[data-kind='freeze'] {
+  background: var(--bui-bg-danger);
+  color: var(--status-critical);
+}
+
+@media (max-width: 720px) {
+  .calendar-day {
+    min-height: 44px;
+  }
+
+  .calendar-events {
+    display: none;
+  }
+}
