@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { BlogIndexPage } from '../../components/pages/BlogIndexPage';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.published.getTime() - a.data.published.getTime(),
+);
+
+const entries = posts.map((post) => ({
+  slug: post.id,
+  title: post.data.title,
+  description: post.data.description,
+  author: post.data.author,
+  published: post.data.published.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }),
+  // A rough count is more use than none, and nobody checks it against a stopwatch.
+  readingTime: Math.max(1, Math.round(post.body!.split(/\s+/).length / 200)),
+  tags: post.data.tags,
+}));
+---
+
+<Layout title="Blog – Acme Cloud">
+  <BlogIndexPage entries={entries} client:load />
+</Layout>

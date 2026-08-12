@@ -40,6 +40,7 @@ export function LandingPage() {
         </Flex>
         <Flex align="center" gap="4">
           <Link href={withBase('/pricing')}>Pricing</Link>
+          <Link href={withBase('/blog')}>Blog</Link>
           <Link href={withBase('/docs')}>Docs</Link>
           <ThemeSwitch />
           <ButtonLink href={withBase('/signin')} variant="secondary" size="small">
@@ -119,6 +120,7 @@ export function LandingPage() {
         </Text>
         <Flex gap="4">
           <Link href={withBase('/docs')}>Docs</Link>
+          <Link href={withBase('/blog')}>Blog</Link>
           <Link href={withBase('/pricing')}>Pricing</Link>
           <Link href={withBase('/signin')}>Sign in</Link>
         </Flex>
