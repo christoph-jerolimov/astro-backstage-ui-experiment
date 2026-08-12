@@ -44,6 +44,7 @@ export const WORK: Destination[] = [
   { id: 'board', label: 'Board', href: '/board', keywords: 'kanban tasks work in progress' },
   { id: 'calendar', label: 'Calendar', href: '/calendar', keywords: 'schedule releases on-call freeze month' },
   { id: 'files', label: 'Files', href: '/files', keywords: 'artifacts backups runbooks storage' },
+  { id: 'messages', label: 'Messages', href: '/messages', keywords: 'chat threads conversations inbox' },
 ];
 
 export const ACTIONS: Destination[] = [
