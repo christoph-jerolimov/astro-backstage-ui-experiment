@@ -10,6 +10,7 @@ import {
   ACTIONS,
   PAGES,
   SERVICE_DESTINATIONS,
+  WORK,
   type Destination,
 } from './destinations';
 import { withBase } from './base';
@@ -68,6 +69,7 @@ export function CommandPalette({ docs = [] }: CommandPaletteProps) {
         <Command.Empty>Nothing matches that.</Command.Empty>
 
         <Group heading="Pages" items={PAGES} onSelect={go} />
+        <Group heading="Work" items={WORK} onSelect={go} />
         <Group heading="Actions" items={ACTIONS} onSelect={go} />
         <Group heading="Account" items={ACCOUNT} onSelect={go} />
         <Group heading="Docs" items={docDestinations} onSelect={go} />

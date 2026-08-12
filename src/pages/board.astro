@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { BoardPage } from '../components/pages/BoardPage';
+---
+
+<DashboardLayout title="Board – Acme Cloud">
+  <BoardPage client:load />
+</DashboardLayout>

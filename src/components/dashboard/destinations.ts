@@ -40,6 +40,10 @@ export const ACCOUNT: Destination[] = [
   { id: 'signin', label: 'Sign out', href: '/signin', keywords: 'log out sign in' },
 ];
 
+export const WORK: Destination[] = [
+  { id: 'board', label: 'Board', href: '/board', keywords: 'kanban tasks work in progress' },
+];
+
 export const ACTIONS: Destination[] = [
   {
     id: 'create-service',
