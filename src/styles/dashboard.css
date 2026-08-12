@@ -1567,3 +1567,80 @@
   background: var(--bui-bg-info);
   color: var(--chart-series-1);
 }
+
+/* ---- Board ----
+   Four columns that scroll sideways as a group on narrow screens rather than
+   squeezing each card into a sliver. */
+
+.board {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.board-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--bui-border-1);
+  border-radius: 12px;
+  background: var(--bui-bg-neutral-1);
+}
+
+.board-column-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 2px;
+}
+
+.board-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 60px;
+  outline: none;
+}
+
+.board-card {
+  outline: none;
+  cursor: grab;
+}
+
+.board-card[data-dragging] {
+  opacity: 0.4;
+}
+
+.board-card[data-focus-visible] .bui-Card {
+  outline: 2px solid var(--chart-series-1);
+  outline-offset: 2px;
+}
+
+.board-list[data-drop-target],
+.board-card[data-drop-target] .bui-Card {
+  outline: 2px dashed var(--chart-series-1);
+  outline-offset: 2px;
+}
+
+.board-size {
+  flex: none;
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--bui-bg-neutral-2);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--bui-fg-secondary);
+}
+
+.board-empty {
+  padding: 12px 4px;
+}
