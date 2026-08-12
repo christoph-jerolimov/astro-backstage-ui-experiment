@@ -1494,3 +1494,31 @@
   padding-top: 24px;
   border-top: 1px solid var(--bui-border-1);
 }
+
+/* ---- Blog post ----
+   The measure is capped here rather than by the grid: a column of prose has
+   one right width, and it is not the width of the viewport. */
+
+.post {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.post-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--bui-border-1);
+}
+
+.post-body {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.post-nav {
+  max-width: 680px;
+  margin: 40px auto 0;
+}

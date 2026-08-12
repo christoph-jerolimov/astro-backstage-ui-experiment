@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { BlogPostFrame } from '../../components/pages/BlogPostFrame';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).sort(
+    (a, b) => b.data.published.getTime() - a.data.published.getTime(),
+  );
+
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      // Sorted newest first, so the next entry is the older post.
+      previous: posts[index + 1]
+        ? { slug: posts[index + 1]!.id, title: posts[index + 1]!.data.title }
+        : undefined,
+      next: posts[index - 1]
+        ? { slug: posts[index - 1]!.id, title: posts[index - 1]!.data.title }
+        : undefined,
+    },
+  }));
+}
+
+const { post, previous, next } = Astro.props;
+const { Content } = await render(post);
+
+const published = post.data.published.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+const readingTime = Math.max(1, Math.round(post.body!.split(/\s+/).length / 200));
+---
+
+<Layout title={`${post.data.title} – Acme Cloud`}>
+  <BlogPostFrame
+    title={post.data.title}
+    description={post.data.description}
+    author={post.data.author}
+    published={published}
+    readingTime={readingTime}
+    tags={post.data.tags}
+    previous={previous}
+    next={next}
+    client:load
+  >
+    <Content />
+  </BlogPostFrame>
+</Layout>
