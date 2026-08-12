@@ -151,7 +151,7 @@ export function InvoiceDetailPage({ invoice }: { invoice: Invoice }) {
 
               <Text variant="body-small" color="secondary">
                 Questions about this invoice? Reply to the billing email, or
-                read <Link href={withBase('/docs')}>the docs</Link>.
+                read the <Link href={withBase('/help')}>help centre</Link>.
               </Text>
             </Flex>
           </CardBody>
