@@ -1444,3 +1444,53 @@
     display: block;
   }
 }
+
+/* ---- Marketing landing ---- */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.logo-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  padding: 20px 0 40px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--bui-fg-secondary);
+  opacity: 0.75;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.cta {
+  margin: 48px 0;
+  padding: 40px 20px;
+  border: 1px solid var(--bui-border-1);
+  border-radius: 16px;
+  background: var(--bui-bg-neutral-1);
+  text-align: center;
+}
+
+.marketing-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--bui-border-1);
+}
