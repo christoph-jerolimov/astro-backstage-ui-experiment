@@ -42,6 +42,7 @@ export const ACCOUNT: Destination[] = [
 
 export const WORK: Destination[] = [
   { id: 'board', label: 'Board', href: '/board', keywords: 'kanban tasks work in progress' },
+  { id: 'calendar', label: 'Calendar', href: '/calendar', keywords: 'schedule releases on-call freeze month' },
 ];
 
 export const ACTIONS: Destination[] = [
