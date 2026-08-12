@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { navigate } from 'astro:transitions/client';
 import {
   Button,
   Card,
@@ -57,7 +58,7 @@ export function ResetPasswordPage() {
               <Button
                 variant="primary"
                 onPress={() => {
-                  window.location.href = withBase('/signin');
+                  navigate(withBase('/signin'));
                 }}
               >
                 Sign in

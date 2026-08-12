@@ -1,12 +1,14 @@
 // Backstage UI has no sidebar component, so this one is built directly on
-// react-aria-components. Items carry an `href`, so react-aria renders them as
-// real links and the browser handles navigation between the Astro pages. The
-// active page is expressed as the ListBox's controlled selection — react-aria
-// does not forward `aria-current`, and inside a listbox `aria-selected` is the
-// semantic assistive tech reads.
+// react-aria-components. Items carry an `href`, so they are real links —
+// Astro's client router intercepts them and swaps the document, and they still
+// work as ordinary links without JavaScript. The active page is expressed as
+// the ListBox's controlled selection — react-aria does not forward
+// `aria-current`, and inside a listbox `aria-selected` is the semantic
+// assistive tech reads.
 //
 // Below 900px the same nav moves into an off-canvas drawer built on react-aria's
 // Modal, which brings the focus trap, Escape-to-close and scroll lock with it.
+import { useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -49,6 +51,34 @@ export type NavKey = (typeof NAV_ITEMS)[number]['id'];
 interface SidebarProps {
   /** Omitted on pages that are not part of the navigation. */
   current?: NavKey;
+}
+
+/**
+ * The active item, from the URL rather than the prop.
+ *
+ * The sidebar is persisted across client-side navigations, so it is never
+ * re-rendered with a new `current` — that prop is only the value it mounted
+ * with. Astro fires `astro:page-load` after every swap, which is where the
+ * new path comes from.
+ */
+function useCurrentPage(initial?: NavKey) {
+  const [current, setCurrent] = useState<NavKey | undefined>(initial);
+
+  useEffect(() => {
+    const fromPath = () => {
+      const path = window.location.pathname.replace(/\/$/, '');
+      const match = NAV_ITEMS.find(
+        (item) => withBase(item.href).replace(/\/$/, '') === path,
+      );
+      setCurrent(match?.id);
+    };
+
+    fromPath();
+    document.addEventListener('astro:page-load', fromPath);
+    return () => document.removeEventListener('astro:page-load', fromPath);
+  }, []);
+
+  return current;
 }
 
 function NavList({ current, label }: { current?: NavKey; label: string }) {
@@ -131,7 +161,9 @@ function User() {
   );
 }
 
-export function Sidebar({ current }: SidebarProps) {
+export function Sidebar({ current: initial }: SidebarProps) {
+  const current = useCurrentPage(initial);
+
   return (
     <aside className="app-sidebar">
       <div className="sidebar-top">

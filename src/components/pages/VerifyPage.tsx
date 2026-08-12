@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { navigate } from 'astro:transitions/client';
 import { Button, Card, CardBody, Flex, Link, Text } from '@backstage/ui';
 import { AuthHeader } from './AuthHeader';
 import { withBase } from '../dashboard/base';
@@ -86,7 +87,7 @@ export function VerifyPage() {
               <Button
                 variant="primary"
                 onPress={() => {
-                  window.location.href = withBase('/');
+                  navigate(withBase('/'));
                 }}
               >
                 Go to the dashboard
