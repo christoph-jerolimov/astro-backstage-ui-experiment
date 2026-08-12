@@ -122,6 +122,7 @@ export function LandingPage() {
           <Link href={withBase('/docs')}>Docs</Link>
           <Link href={withBase('/blog')}>Blog</Link>
           <Link href={withBase('/changelog')}>Changelog</Link>
+          <Link href={withBase('/help')}>Help</Link>
           <Link href={withBase('/pricing')}>Pricing</Link>
           <Link href={withBase('/signin')}>Sign in</Link>
         </Flex>
