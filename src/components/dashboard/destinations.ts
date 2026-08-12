@@ -25,6 +25,7 @@ export const PAGES: Destination[] = [
 ];
 
 export const ACCOUNT: Destination[] = [
+  { id: 'blog', label: 'Blog', href: '/blog', keywords: 'writing posts articles news' },
   { id: 'home', label: 'Marketing home', href: '/home', keywords: 'landing website public' },
   { id: 'profile', label: 'Profile', href: '/profile', keywords: 'account me ada' },
   { id: 'api-keys', label: 'API keys', href: '/api-keys', keywords: 'tokens secrets credentials' },
