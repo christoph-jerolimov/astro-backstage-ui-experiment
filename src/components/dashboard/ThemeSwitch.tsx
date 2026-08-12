@@ -4,10 +4,11 @@ import { Switch } from '@backstage/ui';
 export const THEME_STORAGE_KEY = 'acme-theme-mode';
 
 /**
- * With real routing every navigation is a fresh document, so the choice has to
- * outlive the page. It is persisted to localStorage and re-applied by the
- * inline script in Layout.astro before first paint; this component only syncs
- * the knob to whatever that script already decided.
+ * The choice has to outlive the page: a first load starts from nothing, and a
+ * client-side swap replaces <html> along with the attribute. It is persisted
+ * to localStorage and applied by the inline script in Layout.astro — on first
+ * paint and again on every `astro:after-swap`. This component only syncs the
+ * knob to whatever that script already decided.
  */
 export function ThemeSwitch() {
   const [isDark, setIsDark] = useState(false);

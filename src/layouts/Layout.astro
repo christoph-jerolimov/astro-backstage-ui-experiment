@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '@backstage/ui/css/styles.css';
 import '../styles/dashboard.css';
 
@@ -22,18 +23,30 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     {/*
+      Client-side routing: Astro fetches the next page and swaps the document
+      instead of reloading it, so persisted islands keep their state and there
+      is no flash between pages.
+    */}
+    <ClientRouter />
+    {/*
       Applies the stored theme before first paint so navigating between pages
       never flashes the light theme. Must stay inline and un-deferred.
     */}
     <script is:inline>
       (function () {
-        var mode = 'light';
-        try {
-          if (localStorage.getItem('acme-theme-mode') === 'dark') mode = 'dark';
-        } catch (e) {
-          /* storage unavailable — fall back to light */
+        function applyTheme() {
+          var mode = 'light';
+          try {
+            if (localStorage.getItem('acme-theme-mode') === 'dark') mode = 'dark';
+          } catch (e) {
+            /* storage unavailable — fall back to light */
+          }
+          document.documentElement.setAttribute('data-theme-mode', mode);
         }
-        document.documentElement.setAttribute('data-theme-mode', mode);
+        applyTheme();
+        // A swap replaces <html>, taking the attribute with it, so the theme
+        // has to be re-applied before the new document is painted.
+        document.addEventListener('astro:after-swap', applyTheme);
       })();
     </script>
   </head>

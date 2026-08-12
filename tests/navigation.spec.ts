@@ -53,7 +53,7 @@ test.describe('Sidebar routing', () => {
       'dark',
     );
 
-    // a full document load — the theme has to come back from storage
+    // the client router swaps <html>, so the theme has to be re-applied
     await page
       .getByRole('listbox', { name: 'Main navigation' })
       .getByRole('option', { name: 'Incidents' })

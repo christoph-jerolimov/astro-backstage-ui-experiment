@@ -5,6 +5,7 @@
 // OPEN_EVENT on window instead, which is the whole contract between them.
 import { useEffect, useState } from 'react';
 import { Command } from 'cmdk';
+import { navigate } from 'astro:transitions/client';
 import {
   ACCOUNT,
   ACTIONS,
@@ -43,9 +44,10 @@ export function CommandPalette({ docs = [] }: CommandPaletteProps) {
     };
   }, []);
 
-  // Astro serves separate documents, so going somewhere is a real navigation.
+  // Through the client router, so picking a destination swaps the document
+  // like clicking a nav item does rather than reloading the page.
   const go = (href: string) => {
-    window.location.href = withBase(href);
+    navigate(withBase(href));
   };
 
   const docDestinations: Destination[] = docs.map((doc) => ({

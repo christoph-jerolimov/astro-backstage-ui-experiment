@@ -22,10 +22,16 @@ const docs = (await getCollection('docs'))
 
 <Layout title={title}>
   <div class="app-shell">
-    <Sidebar current={current} client:load />
+    {/*
+      Persisted across navigations: the sidebar and the palette keep their
+      React state instead of re-mounting on every page. The sidebar works out
+      the active item from the URL for the same reason — its `current` prop is
+      only the value it started with.
+    */}
+    <Sidebar current={current} client:load transition:persist />
     <main class="app-main">
       <slot />
     </main>
   </div>
-  <CommandPalette docs={docs} client:load />
+  <CommandPalette docs={docs} client:load transition:persist />
 </Layout>

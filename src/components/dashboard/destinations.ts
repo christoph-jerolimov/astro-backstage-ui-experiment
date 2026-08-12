@@ -36,6 +36,7 @@ export const ACCOUNT: Destination[] = [
   { id: 'audit', label: 'Audit log', href: '/audit', keywords: 'history activity who did what' },
   { id: 'organizations', label: 'Organizations', href: '/organizations', keywords: 'workspaces switch tenant' },
   { id: 'roles', label: 'Roles', href: '/roles', keywords: 'permissions access grants' },
+  { id: 'states', label: 'States', href: '/states', keywords: 'loading empty error skeleton reference' },
   { id: 'pricing', label: 'Pricing', href: '/pricing', keywords: 'plans billing cost' },
   { id: 'signin', label: 'Sign out', href: '/signin', keywords: 'log out sign in' },
 ];

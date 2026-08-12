@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { navigate } from 'astro:transitions/client';
 import {
   Button,
   Card,
@@ -33,7 +34,7 @@ export function SignInPage() {
     }
     // A demo: there is no backend, so a correct-looking sign-in just routes on.
     setError(null);
-    window.location.href = withBase('/');
+    navigate(withBase('/'));
   };
 
   return (
