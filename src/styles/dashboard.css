@@ -1522,3 +1522,48 @@
   max-width: 680px;
   margin: 40px auto 0;
 }
+
+/* ---- Changelog ----
+   Each entry is labelled with a word rather than a coloured dot: "fixed" and
+   "added" are not guessable from a hue. */
+
+.change-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--bui-fg-primary);
+}
+
+.change-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.change-kind {
+  flex: none;
+  min-width: 66px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  background: var(--bui-bg-neutral-2);
+  color: var(--bui-fg-secondary);
+}
+
+.change-list li[data-kind='added'] .change-kind {
+  background: var(--bui-bg-success, var(--bui-bg-neutral-2));
+  color: var(--status-good);
+}
+
+.change-list li[data-kind='fixed'] .change-kind {
+  background: var(--bui-bg-info);
+  color: var(--chart-series-1);
+}

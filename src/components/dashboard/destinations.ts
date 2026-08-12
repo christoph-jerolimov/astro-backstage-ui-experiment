@@ -25,6 +25,7 @@ export const PAGES: Destination[] = [
 ];
 
 export const ACCOUNT: Destination[] = [
+  { id: 'changelog', label: 'Changelog', href: '/changelog', keywords: 'releases what is new versions' },
   { id: 'blog', label: 'Blog', href: '/blog', keywords: 'writing posts articles news' },
   { id: 'home', label: 'Marketing home', href: '/home', keywords: 'landing website public' },
   { id: 'profile', label: 'Profile', href: '/profile', keywords: 'account me ada' },
