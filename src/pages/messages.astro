@@ -1,0 +1,8 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { MessagesPage } from '../components/pages/MessagesPage';
+---
+
+<DashboardLayout title="Messages – Acme Cloud">
+  <MessagesPage client:load />
+</DashboardLayout>

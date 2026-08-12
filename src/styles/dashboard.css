@@ -1752,3 +1752,83 @@
   align-items: center;
   gap: 8px;
 }
+
+/* ---- Messages ----
+   List beside thread on a wide screen; stacked below it, list first, because
+   choosing a conversation comes before reading one. */
+
+.messages {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+  align-items: start;
+}
+
+.conversation-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.conversation-list button {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.conversation-list button:hover {
+  background: var(--bui-bg-neutral-2);
+}
+
+.conversation-list button[data-open='true'] {
+  background: var(--bui-bg-info);
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.message {
+  display: flex;
+  gap: 12px;
+}
+
+.message-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.message[data-mine='true'] .message-body {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--bui-bg-neutral-1);
+}
+
+@media (max-width: 900px) {
+  .messages {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .thread {
+    max-height: 320px;
+  }
+}
