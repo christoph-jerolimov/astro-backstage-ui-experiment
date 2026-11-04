@@ -1832,3 +1832,61 @@
     max-height: 320px;
   }
 }
+
+/* ---- Page intro ----
+   PluginHeader is a toolbar: it holds the icon, title and actions and nothing
+   else. The description, tags and metadata that used to live inside Header
+   are rendered under it. */
+
+.page-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0 4px;
+}
+
+.page-intro-facts {
+  flex-wrap: wrap;
+}
+
+.page-meta {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.page-meta > div {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.page-meta dt {
+  font-size: 13px;
+  color: var(--bui-fg-secondary);
+}
+
+.page-meta dd {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bui-fg-primary);
+}
+
+.page-tags {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.page-tags li {
+  padding: 2px 8px;
+  border: 1px solid var(--bui-border-1);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--bui-fg-secondary);
+}
